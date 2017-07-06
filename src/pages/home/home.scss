@@ -1,3 +1,32 @@
 page-home {
 
+ion-content {
+        background: #eee !important;
+        .fixed-content,
+        .scroll-content {
+            padding-top: 55px !important;
+            margin-top: 0 !important;
+            border-top: none !important;
+        }
+    }
+
+ion-grid {
+  justify-content: center;
+}	
+
+.img-center {
+		margin-left: 46%;
+	}
+
+.line {
+   padding:10px;
+   margin-right: 10px;
+   border-bottom: 4px solid color($colors,'primary');
+   margin-bottom: 35px;
+ }
+ 
+ .headanimate {
+   top: -90px;
+ }
+
 }

@@ -1,11 +1,37 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>
-      About
-    </ion-title>
-  </ion-navbar>
+  <ion-toolbar  no-border-top>
+    <ion-segment [(ngModel)]="account"  [color]="'light'">
+      <ion-segment-button value="profile">
+        基本信息
+      </ion-segment-button>
+      <ion-segment-button value="orders">
+        我的订单
+      </ion-segment-button>
+      <ion-segment-button  value="wallet">
+        我的求购
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content class="outer-content">
+  <div [ngSwitch]="account">
+    <div padding-top text-center *ngSwitchCase="'profile'" >
+      <img alt="profileImage" [src]="base64Image">
+      <h2>李XX</h2>
+      <ion-list inset>
+        <button ion-item>更新地址</button>
+        <button ion-item>登出</button>
+      </ion-list>
+    </div>
 
+    <div padding-top text-center *ngSwitchCase="'orders'">
+        Order List data to be shown here
+    </div>
+
+    <div padding-top text-center *ngSwitchCase="'wallet'">
+       Wallet statement and transaction here.
+    </div>
+
+  </div>
 </ion-content>

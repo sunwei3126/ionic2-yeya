@@ -1,17 +1,68 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title>Home</ion-title>
+<ion-header [class.headanimate]="tabanimate">
+  <ion-navbar no-border-bottom>
+    <ion-searchbar [showCancelButton]="true" placeholder="搜索"></ion-searchbar>
+     <ion-buttons end>
+      <button ion-button large>
+        <ion-icon ios="ios-cart" md="md-cart"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
-
-<ion-content padding>
-  <h2>Welcome to Ionic!</h2>
-  <p>
-    This starter project comes with simple tabs-based layout for apps
-    that are going to primarily use a Tabbed UI.
-  </p>
-  <p>
-    Take a look at the <code>src/pages/</code> directory to add or change tabs,
-    update any existing page or create new pages.
-  </p>
+<ion-content (ionScroll)="onScroll($event)" scrollY="false">
+  <ion-grid>
+    <ion-row margin>
+      <ion-col text-center>
+        <button ion-button icon-only round (click)="gotoCompanyShow()">
+           <ion-icon name="cube"></ion-icon>
+        </button>
+         <p>公司展示</p> 
+      </ion-col>
+      <ion-col text-center>
+        <button ion-button icon-only round (click)="gotoBrandShow()">
+           <ion-icon name="eye"></ion-icon>
+        </button>
+         <p>品牌展示</p> 
+      </ion-col>
+      <ion-col text-center>
+        <button ion-button  icon-only round>
+           <ion-icon name="basket"></ion-icon>
+        </button>
+         <p>求购</p> 
+      </ion-col>
+      <ion-col text-center>
+        <button ion-button  icon-only round>
+           <ion-icon name="hand"></ion-icon>
+        </button>
+         <p>帮找货</p> 
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+ 
+ <h2 class="line">推荐好货</h2>
+	<div class="row img-center" *ngIf="!products">
+		<img height="35" src="assets/img/ring.svg">
+	</div>
+	<ion-grid no-padding>
+	  <ion-row *ngFor="let product of products;">
+      <ion-col col-4>
+	      <img [src]="product.imageUrl"/>
+      </ion-col>
+	    <ion-col no-padding col-8>
+	    	<ion-card>
+				  <ion-card-content>
+					  <ion-card-title no-padding>
+			      	<h2><b>{{product.productName}}</b></h2>
+			      </ion-card-title>
+					  <ion-row>
+				      <ion-col>
+                <p>型号：A-VBSE/TR/PI 38</p>
+                <p>库存：{{product.stock}}件 &nbsp;</p>
+				        <p>价格：{{product.price}}元 &nbsp;</p>
+				      </ion-col>
+				    </ion-row>
+				  </ion-card-content>
+				</ion-card>
+	    </ion-col>
+	  </ion-row>
+	</ion-grid>
 </ion-content>

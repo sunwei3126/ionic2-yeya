@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{title}}</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+	<ion-grid [virtualScroll]="products" approxItemHeight="40px">
+	  <ion-row *virtualItem="let product" (click)="goToProductDetail(product)">
+	    <ion-col col-4>
+	      <ion-img class="v-img" [src]="product.imageUrl"></ion-img>
+	    </ion-col>
+	    <ion-col col-7 offset-1>
+	    	<p>{{product.productName}}</p>
+	    	<ion-badge item-right>4.1</ion-badge>
+		    <p class="price"> {{ product.price }} </p>
+	    </ion-col>
+      <ion-item-options side="left">
+        <button primary>
+          <ion-icon name="text"></ion-icon>
+          Text
+        </button>
+        <button secondary>
+          <ion-icon name="call"></ion-icon>
+          Call
+        </button>
+      </ion-item-options>
+	  </ion-row>
+	</ion-grid>
+</ion-content>
+<ion-footer>
+  	<ion-grid>
+  		<ion-row>
+  			<ion-col>
+  				<ion-buttons>
+			      <button ion-button full clear>
+			         <ion-icon ios="ios-funnel" md="md-funnel"></ion-icon>&nbsp;过滤
+			      </button>
+			    </ion-buttons>
+  			</ion-col>
+  			<ion-col>
+  				<ion-buttons>
+			      <button ion-button full clear>
+			        <ion-icon name="menu"></ion-icon>&nbsp;排序
+			      </button>
+			    </ion-buttons>
+  			</ion-col>
+  		</ion-row>
+  	</ion-grid>
+</ion-footer>
