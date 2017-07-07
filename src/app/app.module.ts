@@ -16,7 +16,9 @@ import { CustomerService } from '../providers/customer-service/customer-service'
   imports: [
     BrowserModule,
     HttpModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp, {
+       tabsHideOnSubPages: true
+    }) 
   ],
   bootstrap: [IonicApp],
   entryComponents: [

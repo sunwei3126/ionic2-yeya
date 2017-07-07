@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{product.productName}}</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding-bottom>
+  <ion-card>
+        <img [src]='product.imageUrl'>
+        <ion-fab right top>
+            <button ion-fab (click)="addToFavourite(product)">
+              <ion-icon name="heart"></ion-icon>
+            </button> 
+        </ion-fab>
+         <ion-item>
+            <p> 价格：{{product.price}}</p>
+            <p> 库存：500</p>
+        </ion-item>
+        <ion-item> 
+            <h2>商品详情</h2>
+            <p>sfsfs</p>
+        </ion-item>
+        <ion-item>
+           <h2>商品规格</h2>
+           <p>SFSFS</p>
+        </ion-item>
+        <ion-grid>
+            <ion-row>
+                <ion-col width-50>
+                    <button ion-button round small><ion-icon name="add" (click)="countOperator(1)"></ion-icon></button>
+                </ion-col>
+                <ion-label text-center>{{count}}</ion-label>
+                <ion-col width-50>
+                    <button ion-button round small><ion-icon name="remove" (click)="countOperator(-1)"></ion-icon></button>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+
+        <button ion-button block (click)="addToCarts(product,count)"><ion-icon name="cart" ></ion-icon>加入购物车</button>
+
+    </ion-card>
+</ion-content>

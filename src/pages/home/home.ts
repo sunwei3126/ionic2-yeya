@@ -47,4 +47,9 @@ export class HomePage {
     this.ref.detectChanges();
   }
 
+  gotoProductDetails(product:any)
+  {
+    this.navCtrl.push("ProductDetailsPage", {product:product});
+  }
+
 }

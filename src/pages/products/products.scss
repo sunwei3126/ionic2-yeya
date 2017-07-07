@@ -1,5 +1,4 @@
 page-products {
-
     ion-row {
 		border-bottom: solid 1px #d8d8d8;
 	}
@@ -10,13 +9,13 @@ page-products {
 
 	.price {
 		font-weight: bold;
-        font-size: 18px;
+        font-size: 16px;
 	}
 
 	.v-img {
     width: 100%;
     height: auto;
     overflow: hidden;   
-     contain:none;
+    contain:none;
 	}
 }

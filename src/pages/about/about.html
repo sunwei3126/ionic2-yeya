@@ -1,37 +1,36 @@
 <ion-header>
-  <ion-toolbar  no-border-top>
-    <ion-segment [(ngModel)]="account"  [color]="'light'">
-      <ion-segment-button value="profile">
-        基本信息
-      </ion-segment-button>
-      <ion-segment-button value="orders">
-        我的订单
-      </ion-segment-button>
-      <ion-segment-button  value="wallet">
-        我的求购
-      </ion-segment-button>
-    </ion-segment>
-  </ion-toolbar>
+    <ion-navbar>
+        <ion-title>我的主页</ion-title>
+    </ion-navbar>
 </ion-header>
-
-<ion-content class="outer-content">
-  <div [ngSwitch]="account">
-    <div padding-top text-center *ngSwitchCase="'profile'" >
-      <img alt="profileImage" [src]="base64Image">
-      <h2>李XX</h2>
-      <ion-list inset>
-        <button ion-item>更新地址</button>
-        <button ion-item>登出</button>
-      </ion-list>
-    </div>
-
-    <div padding-top text-center *ngSwitchCase="'orders'">
-        Order List data to be shown here
-    </div>
-
-    <div padding-top text-center *ngSwitchCase="'wallet'">
-       Wallet statement and transaction here.
-    </div>
-
-  </div>
+<ion-content>
+  <section class="dv_data" (click)="PersonalPage();">
+        <img [src]="base64Image" />
+        <section class="dv_name_wrap">
+            <h5>{{name}}</h5>
+            <p>查看或编辑个人主页</p>
+        </section>
+    </section>
+    <ion-list no-border>
+        <ion-item (click)="myOrdersPage();">
+            <ion-icon name='checkbox' item-left color="h"></ion-icon>
+            我的订单
+        </ion-item>
+        <ion-item (click)="myCartPage();">
+            <ion-icon name='cart' item-left color="h"></ion-icon>
+            我的的购物车
+        </ion-item>
+        <ion-item (click)="myQueryPage();">
+            <ion-icon name='play' item-left color="h"></ion-icon>
+            我的求购
+        </ion-item>
+       <ion-item (click)="myCollectPage();">
+            <ion-icon name='star' item-left color="h"></ion-icon>
+            我的收藏
+        </ion-item>
+        <ion-item (click)="mySettingPage();">
+            <ion-icon name='school' item-left color="h"></ion-icon>
+            设置
+        </ion-item>
+    </ion-list>
 </ion-content>

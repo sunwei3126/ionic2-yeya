@@ -42,27 +42,16 @@
 	<div class="row img-center" *ngIf="!products">
 		<img height="35" src="assets/img/ring.svg">
 	</div>
-	<ion-grid no-padding>
-	  <ion-row *ngFor="let product of products;">
-      <ion-col col-4>
-	      <img [src]="product.imageUrl"/>
-      </ion-col>
-	    <ion-col no-padding col-8>
-	    	<ion-card>
-				  <ion-card-content>
-					  <ion-card-title no-padding>
-			      	<h2><b>{{product.productName}}</b></h2>
-			      </ion-card-title>
-					  <ion-row>
-				      <ion-col>
-                <p>型号：A-VBSE/TR/PI 38</p>
-                <p>库存：{{product.stock}}件 &nbsp;</p>
-				        <p>价格：{{product.price}}元 &nbsp;</p>
-				      </ion-col>
-				    </ion-row>
-				  </ion-card-content>
-				</ion-card>
-	    </ion-col>
-	  </ion-row>
-	</ion-grid>
+
+  <ion-list>
+    <ion-item *ngFor="let product of products" (click)="gotoProductDetails(product)">
+      <ion-thumbnail item-start>
+          <img [src]="product.imageUrl">
+      </ion-thumbnail>
+      <h2>{{product.productName}}</h2>
+       <p>型号：A-VBSE/TR/PI 38</p>
+       <p>库存：{{product.stock}}件 &nbsp;</p>
+			 <p>价格：{{product.price}}元 &nbsp;</p>
+    </ion-item>
+  </ion-list>
 </ion-content>
