@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>联系专家</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+	<ion-card *ngFor="let expert of experts">
+	  <ion-item>
+	    <ion-avatar item-start>
+	      <img src="{{expert.img}}">
+	    </ion-avatar>
+	    <h2>{{expert.name}}</h2>
+	    <p>{{expert.goodAt}}</p>
+	  </ion-item>
+	  <div class="experts-padding">
+		  <ion-row>
+		    <ion-col>
+		        手机：{{expert.phone}}
+		    </ion-col>
+		    <ion-col text-right>
+		        <a href="tel:{{expert.phoneAll}}">拨打</a>
+		    </ion-col>
+		  </ion-row>
+		  <ion-row>
+		    <ion-col>
+		        微信：{{expert.wx}}
+		    </ion-col>
+		    <ion-col text-right>
+		    		<a>复制</a>
+		    </ion-col>
+		  </ion-row>
+		  <ion-row>
+		    <ion-col>
+		        QQ：{{expert.qq}}
+		    </ion-col>
+		    <ion-col text-right>
+		    		<a>复制</a>
+		    </ion-col>
+		  </ion-row>
+	  </div>
+	</ion-card>
+</ion-content>

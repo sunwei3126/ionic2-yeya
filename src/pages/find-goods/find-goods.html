@@ -1,0 +1,14 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>帮找货</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+	<ion-grid>
+	  <ion-row class="find-goods">
+	    <ion-col col-4 *ngFor="let findGood of findGoods" (click)="gotoContactExpertsShow(findGood.id)">
+	    		{{findGood.type1}}<br />{{findGood.type2}} 
+	    </ion-col>
+	  </ion-row>
+	</ion-grid>
+</ion-content>

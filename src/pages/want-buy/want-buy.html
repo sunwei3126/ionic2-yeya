@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>发布求购</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+	<div class="list-tit">
+		求购日期
+	</div>
+	<ion-row class="time">
+		<ion-col col-5 class="date">
+		  <ion-datetime displayFormat="YYYY MM DD" [(ngModel)]="formval.timeStarts"></ion-datetime>
+		 </ion-col>
+		 <ion-col col-2 class="center">
+		 	 至
+		  </ion-col>
+		  <ion-col col-5 class="date">
+		 	 <ion-datetime displayFormat="YYYY MM DD" [(ngModel)]="formval.timeEnds"></ion-datetime>
+		  </ion-col>
+	</ion-row>
+	<div class="list-tit">
+		产品类型
+	</div>
+	<div>
+		<ion-select [(ngModel)]="formval.type" class="select-type">
+	        <ion-option value="液压阀">液压阀</ion-option>
+			<ion-option value="液压阀1">液压阀1</ion-option>
+			<ion-option value="液压阀2">液压阀2</ion-option>
+			<ion-option value="液压阀3">液压阀3</ion-option>
+			<ion-option value="液压阀4">液压阀4</ion-option>
+			<ion-option value="液压阀5">液压阀5</ion-option>
+	    </ion-select>
+	</div>
+	<div class="list-tit">
+		产品品牌
+	</div>
+	<div>
+		<ion-input class="buy-input" [(ngModel)]="formval.brand" type="text"></ion-input>
+	</div>
+	<div class="list-tit">
+		产品型号
+	</div>
+	<div>
+		<ion-input class="buy-input" [(ngModel)]="formval.model" type="text"></ion-input>
+	</div>
+	<div class="buy-btn">
+	  <button block ion-button full>发布</button>
+	</div>
+</ion-content>
