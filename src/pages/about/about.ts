@@ -39,6 +39,6 @@ export class AboutPage {
   }
 
   checkLogin() {
-     this.navCtrl.push( 'LoginPage' );
+     this.navCtrl.push( 'ChangePassPage' );
   }
 }

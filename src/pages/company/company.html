@@ -3,6 +3,39 @@
     <ion-title>公司展示</ion-title>
   </ion-navbar>
 </ion-header>
-<ion-content padding>
-
+<ion-content>
+	<!--下拉刷新-->
+ 	<ion-refresher (ionRefresh)="doRefresh($event)">
+      <ion-refresher-content
+        pullingIcon="arrow-dropdown"
+        pullingText="获取最新数据..."
+        refreshingSpinner="circles"
+        refreshingText="刷新完毕">
+      </ion-refresher-content>
+    </ion-refresher>
+    <!--列表-->
+    <ion-card *ngFor="let company of companys" class="comapny-list">
+	  <ion-card-content>
+	    <ion-card-title>
+	      {{company.name}}
+	    </ion-card-title>
+	    <p>
+	      {{company.url}}
+	    </p>
+	    <p>
+	      {{company.tel}}
+	    </p>
+	    <p>
+	    	公司主营：{{company.mainCore}}
+	    </p>
+	  </ion-card-content>
+	</ion-card>
+    <!--上拉加载-->
+	<ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+      <ion-infinite-scroll-content
+        loadingSpinner="bubbles"
+        loadingText="Loading more data...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+    <!--end-->
 </ion-content>

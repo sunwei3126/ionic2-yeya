@@ -9,14 +9,8 @@
   </ion-navbar>
 </ion-header>
 <ion-content (ionScroll)="onScroll($event)" scrollY="false">
-  <ion-grid>
+  <ion-grid class="home-top">
     <ion-row margin>
-      <ion-col text-center>
-        <button ion-button icon-only round (click)="gotoCompanyShow()">
-           <ion-icon name="cube"></ion-icon>
-        </button>
-         <p>公司展示</p> 
-      </ion-col>
       <ion-col text-center>
         <button ion-button icon-only round (click)="gotoBrandShow()">
            <ion-icon name="eye"></ion-icon>
@@ -24,13 +18,19 @@
          <p>品牌展示</p> 
       </ion-col>
       <ion-col text-center>
-        <button ion-button  icon-only round>
-           <ion-icon name="basket"></ion-icon>
+        <button ion-button icon-only round (click)="gotoCompanyShow()">
+           <ion-icon name="cube"></ion-icon>
         </button>
-         <p>求购</p> 
+         <p>公司展示</p> 
       </ion-col>
       <ion-col text-center>
-        <button ion-button  icon-only round>
+        <button ion-button  icon-only round (click)="gotoWantBuyShow()">
+           <ion-icon name="basket"></ion-icon>
+        </button>
+         <p>发布求购</p> 
+      </ion-col>
+      <ion-col text-center>
+        <button ion-button  icon-only round (click)="gotoFindGoodsShow()">
            <ion-icon name="hand"></ion-icon>
         </button>
          <p>帮找货</p> 

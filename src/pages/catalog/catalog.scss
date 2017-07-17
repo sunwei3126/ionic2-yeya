@@ -56,7 +56,8 @@ page-catalog {
   #category #nav .nav-blur{
     color:black;
     border-right:1px solid #e0e0e0;
-    background-color:#99D4FF;
+    background-color: #00497d;
+    color: #ffffff;
   }
   #category #nav .nav-current{
     color:color($colors,'primary');
@@ -91,6 +92,10 @@ page-catalog {
   }
   #category #pro .content{
     overflow:hidden;
+    padding:0 10px;
+  }
+  #category #pro .img{
+      height:80px;
   }
 
   #category #pro .content .top span {
@@ -125,5 +130,5 @@ page-catalog {
     text-align:center;
     font-family:'宋体';
   } 
-
+  #category #pro .content p{ font-size: 12px;}
 }

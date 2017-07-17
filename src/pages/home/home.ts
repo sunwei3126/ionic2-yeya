@@ -31,7 +31,12 @@ export class HomePage {
   gotoBrandShow() {
     this.navCtrl.push("BrandPage");
   }
-
+  gotoWantBuyShow(){
+    this.navCtrl.push("WantBuyPage");
+  }
+  gotoFindGoodsShow(){
+    this.navCtrl.push("FindGoodsPage");
+  }
   onScroll($event: any) {
     var scrollTop = $event.scrollTop;
     if (scrollTop > 50 && (this.old_scrollTop - scrollTop) < 0) {

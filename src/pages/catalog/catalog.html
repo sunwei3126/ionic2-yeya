@@ -1,13 +1,7 @@
-<!--
-  Generated template for the CatalogPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
-  <ion-navbar>
+  <!--<ion-navbar>
     <ion-title>产品中心</ion-title>
-  </ion-navbar>
+  </ion-navbar>-->
    <ion-searchbar [showCancelButton]="true" placeholder="搜索"></ion-searchbar>
 </ion-header>
 
@@ -23,20 +17,27 @@
       <div class="pro-scroll">
         <div class="pro-warp">
           <div class="content" *ngIf="topCategory && topCategory.children">
-            <div class="top">
+            	<ion-grid>
+			  <ion-row>
+			    <ion-col col-4 *ngFor="let subItem of topCategory.children" (click)="gotoSearchPage(subItem)">
+			    		<div class="img"><img src="{{subItem.img}}" /></div>
+			   	 	<p>{{subItem.name}}</p>
+			    </ion-col>
+			  </ion-row>
+			</ion-grid>
+            <!--<div class="top">
                <span (click)="gotoProducts(topCategory)">{{topCategory.name}}</span>
             </div>
-          <div *ngFor="let subItem of topCategory.children">
-            <div class="content-title">
-              <span (click)="gotoProducts(subItem)">{{subItem.name}}</span>
-            </div>
-            <div class="content-body" *ngIf="subItem.children">
-              <li class="content-body-list" *ngFor="let subSubItem of subItem.children">
-                <span (click)="gotoProducts(subSubItem)">{{subSubItem.name}}</span>
-              </li>
-            </div>
-            </div>
-          
+	          <div *ngFor="let subItem of topCategory.children">
+	            <div class="content-title">
+	              <span (click)="gotoProducts(subItem)">{{subItem.name}}</span>
+	            </div>
+	            <div class="content-body" *ngIf="subItem.children">
+	              <li class="content-body-list" *ngFor="let subSubItem of subItem.children">
+	                <span (click)="gotoProducts(subSubItem)">{{subSubItem.name}}</span>
+	              </li>
+	            </div>
+            </div>-->
           </div>
         </div>
       </div>

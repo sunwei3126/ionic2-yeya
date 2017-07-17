@@ -4,14 +4,37 @@
     </ion-navbar>
 </ion-header>
 <ion-content>
-  <section class="dv_data" (click)="PersonalPage();">
-        <img [src]="base64Image" />
-        <section class="dv_name_wrap">
-            <h5>{{name}}</h5>
-            <p>查看或编辑个人主页</p>
-        </section>
-    </section>
-    <ion-list no-border>
+    <div class="about" (click)="PersonalPage();" padding>
+        <div class="img"><img [src]="base64Image" /></div>
+        <h5>{{name}}</h5>
+    </div>
+    <ion-grid padding class="classification">
+	  <ion-row>
+	    <ion-col col-3 (click)="myOrdersPage();">
+	    		<div><ion-icon name='cart' color="danger"></ion-icon></div>
+	    		<p>购物车</p>
+	    </ion-col>
+	    <ion-col col-3 (click)="myOrdersPage();">
+	    		<div><ion-icon name='checkbox' color="secondary"></ion-icon></div>
+	    		<p>我的订单</p>
+	    </ion-col>
+	    <ion-col col-3 (click)="myOrdersPage();">
+	    		<div><ion-icon name='play' color="primary"></ion-icon></div>
+	    		<p>我的求购</p>
+	    </ion-col>
+	  </ion-row>
+	</ion-grid>
+	<ion-list class="about-list">
+	  <button ion-item (click)="myOrdersPage();">
+	    <ion-icon name='clipboard' item-left color="primary"></ion-icon>
+         地址簿
+	  </button> 
+	  <button ion-item (click)="myOrdersPage();">
+	    <ion-icon name='unlock' item-left color="primary"></ion-icon>
+         修改密码
+	  </button> 
+	</ion-list>
+    <!--<ion-list no-border>
         <ion-item (click)="myOrdersPage();">
             <ion-icon name='checkbox' item-left color="h"></ion-icon>
             我的订单
@@ -32,5 +55,5 @@
             <ion-icon name='school' item-left color="h"></ion-icon>
             设置
         </ion-item>
-    </ion-list>
+    </ion-list>-->
 </ion-content>

@@ -24,7 +24,12 @@ export class LoginPage {
   }
 
   login() {
-
+	 this.navCtrl.push("TabsPage");
   }
-
+  gotoForgotPassPage(){
+	 this.navCtrl.push("ForgotPassPage");
+  }
+  gotoRegisterPage(){
+	 this.navCtrl.push("RegisterPage");
+  }
 }
