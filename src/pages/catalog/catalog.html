@@ -1,46 +1,38 @@
 <ion-header>
-  <!--<ion-navbar>
-    <ion-title>产品中心</ion-title>
-  </ion-navbar>-->
    <ion-searchbar [showCancelButton]="true" placeholder="搜索"></ion-searchbar>
-</ion-header>
+  </ion-header>
 
 <ion-content id="category">
-    <nav id="nav">
+	<div class="row img-center" *ngIf="!topCategories">
+		<img height="35" src="assets/img/ring.svg">
+  </div>
+  
+   <nav id="nav" *ngIf="topCategories">
       <ul>
-        <li *ngFor="let item of categoryData, let i=index">
-          <span [ngClass]="{true:'nav-current', false:'nav-blur'}[item.isSelect]" (click)="showSubCategories(item)" >{{item.name}}</span>
+        <li *ngFor="let item of topCategories, let i=index">
+          <span [ngClass]="{true:'nav-current', false:'nav-blur'}[item.isSelect]" (click)="showSubCategories(item)">{{item.name}}</span>
         </li>
       </ul>
     </nav>
     <div id="pro">
       <div class="pro-scroll">
         <div class="pro-warp">
-          <div class="content" *ngIf="topCategory && topCategory.children">
-            	<ion-grid>
-			  <ion-row>
-			    <ion-col col-4 *ngFor="let subItem of topCategory.children" (click)="gotoSearchPage(subItem)">
-			    		<div class="img"><img src="{{subItem.img}}" /></div>
-			   	 	<p>{{subItem.name}}</p>
-			    </ion-col>
-			  </ion-row>
-			</ion-grid>
-            <!--<div class="top">
-               <span (click)="gotoProducts(topCategory)">{{topCategory.name}}</span>
+          <div class="content" *ngIf="topCategory && topCategory.sub_categories">
+            <div class="top">
+               <span (click)="gotoSearchPage(topCategory)">{{topCategory.name}}</span>
             </div>
-	          <div *ngFor="let subItem of topCategory.children">
-	            <div class="content-title">
-	              <span (click)="gotoProducts(subItem)">{{subItem.name}}</span>
-	            </div>
-	            <div class="content-body" *ngIf="subItem.children">
-	              <li class="content-body-list" *ngFor="let subSubItem of subItem.children">
-	                <span (click)="gotoProducts(subSubItem)">{{subSubItem.name}}</span>
-	              </li>
-	            </div>
-            </div>-->
+          <div *ngFor="let subItem of topCategory.sub_categories">
+            <div class="content-title">
+              <span (click)="gotoSearchPage(subItem)">{{subItem.name}}</span>
+            </div>
+            <div class="content-body" *ngIf="subItem.sub_categories">
+              <li class="content-body-list" *ngFor="let subSubItem of subItem.sub_categories">
+                <span (click)="gotoSearchPage(subSubItem)">{{subSubItem.name}}</span>
+              </li>
+            </div>
+            </div> 
           </div>
         </div>
       </div>
     </div>
-
 </ion-content>
