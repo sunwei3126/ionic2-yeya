@@ -1,0 +1,13 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>我的订单</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <ion-item-group *ngFor="let order of orders">
+    <ion-item-divider color="light">订单编号：{{order.id}}</ion-item-divider>
+    <ion-item>订单状态：{{order.type}}</ion-item>
+    <ion-item>下单时间：{{order.time}}</ion-item>
+    <ion-item>订单总额：¥{{order.money}}</ion-item>
+  </ion-item-group>
+</ion-content>

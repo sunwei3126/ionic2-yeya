@@ -1,0 +1,11 @@
+page-collect {
+    .overflow{ overflow: hidden; zoom: 1;}
+    .fl{ float: left; display: inline;}
+    .fr{ float: right; display: inline;}
+    .remove,.add{ color: #FFFFFF; font-size: 16px;}
+    .remove{ background-color: #f53d3d;}
+    .add{ background-color: #32db64;}
+    .tj{ margin-top: 60px; font-size: 14px; text-align: center;}
+    .list-ios .item-block .item-inner,.list-md .item-block .item-inner{ border-bottom: 0;}
+    .item-ios,.item-md{ border-bottom: 0.55px solid #c8c7cc;}
+}

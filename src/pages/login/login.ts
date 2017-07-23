@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
 
 /**
  * Generated class for the LoginPage page.
@@ -15,8 +16,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 export class LoginPage {
   name:string;
   pass:string;
-
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,public storage: Storage) {
   }
 
   ionViewDidLoad() {
@@ -24,7 +24,8 @@ export class LoginPage {
   }
 
   login() {
-	 this.navCtrl.push("TabsPage");
+	 this.storage.set('loginType', true);//登录状态
+	 this.navCtrl.pop();//返回上一页
   }
   gotoForgotPassPage(){
 	 this.navCtrl.push("ForgotPassPage");

@@ -1,0 +1,16 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>地址簿</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <ion-item-group *ngFor="let address of addressList">
+    <ion-item-divider color="light">{{address.platform}}</ion-item-divider>
+    <ion-item>电子邮箱：{{address.email}}<br/>
+    公司：{{address.company}}<br/>
+    电话号码：{{address.tel}}<br/>
+    传真号码：{{address.fax}}<br/>
+    {{address.address}}<br/>
+    {{address.exact}}</ion-item>
+  </ion-item-group>
+</ion-content>

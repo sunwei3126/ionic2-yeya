@@ -4,13 +4,13 @@
     </ion-navbar>
 </ion-header>
 <ion-content>
-    <div class="about" (click)="PersonalPage();" padding>
+    <div class="about" padding>
         <div class="img"><img [src]="base64Image" /></div>
         <h5>{{name}}</h5>
     </div>
     <ion-grid padding class="classification">
 	  <ion-row>
-	    <ion-col col-3 (click)="myOrdersPage();">
+	    <ion-col col-3 (click)="myCartPage();">
 	    		<div><ion-icon name='cart' color="danger"></ion-icon></div>
 	    		<p>购物车</p>
 	    </ion-col>
@@ -18,21 +18,25 @@
 	    		<div><ion-icon name='checkbox' color="secondary"></ion-icon></div>
 	    		<p>我的订单</p>
 	    </ion-col>
-	    <ion-col col-3 (click)="myOrdersPage();">
+	    <ion-col col-3 (click)="myQueryPage();">
 	    		<div><ion-icon name='play' color="primary"></ion-icon></div>
 	    		<p>我的求购</p>
 	    </ion-col>
 	  </ion-row>
 	</ion-grid>
 	<ion-list class="about-list">
-	  <button ion-item (click)="myOrdersPage();">
+	  <button ion-item (click)="myAddressPage();">
 	    <ion-icon name='clipboard' item-left color="primary"></ion-icon>
          地址簿
-	  </button> 
-	  <button ion-item (click)="myOrdersPage();">
+	  </button>
+	  <button ion-item (click)="myCollectPage();">
+	    <ion-icon name='heart' item-left color="primary"></ion-icon>
+         我的收藏
+	  </button>
+	  <button ion-item (click)="gotoChangePassPage();">
 	    <ion-icon name='unlock' item-left color="primary"></ion-icon>
          修改密码
-	  </button> 
+	  </button>
 	</ion-list>
     <!--<ion-list no-border>
         <ion-item (click)="myOrdersPage();">

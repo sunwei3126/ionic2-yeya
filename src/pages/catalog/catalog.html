@@ -17,30 +17,29 @@
       <div class="pro-scroll">
         <div class="pro-warp">
           <div class="content" *ngIf="topCategory && topCategory.children">
-            	<ion-grid>
+            	<!--<ion-grid>
 			  <ion-row>
 			    <ion-col col-4 *ngFor="let subItem of topCategory.children" (click)="gotoSearchPage(subItem)">
 			    		<div class="img"><img src="{{subItem.img}}" /></div>
 			   	 	<p>{{subItem.name}}</p>
 			    </ion-col>
 			  </ion-row>
-			</ion-grid>
-            <!--<div class="top">
-               <span (click)="gotoProducts(topCategory)">{{topCategory.name}}</span>
+			</ion-grid>-->
+            <div class="top">
+               <span (click)="gotoSearchPage(topCategory)">{{topCategory.name}}</span>
             </div>
 	          <div *ngFor="let subItem of topCategory.children">
 	            <div class="content-title">
-	              <span (click)="gotoProducts(subItem)">{{subItem.name}}</span>
+	              <span (click)="gotoSearchPage(subItem)">{{subItem.name}}</span>
 	            </div>
 	            <div class="content-body" *ngIf="subItem.children">
 	              <li class="content-body-list" *ngFor="let subSubItem of subItem.children">
-	                <span (click)="gotoProducts(subSubItem)">{{subSubItem.name}}</span>
+	                <span (click)="gotoSearchPage(subSubItem)">{{subSubItem.name}}</span>
 	              </li>
 	            </div>
-            </div>-->
+            </div>
           </div>
         </div>
       </div>
     </div>
-
 </ion-content>

@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>收藏夹</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content >
+	<div  *ngIf="goodsList.length>0">
+	<ion-list>
+	  <ion-item-sliding *ngFor="let goods of goodsList" #slidingItem>
+		  <ion-item>
+		    <ion-avatar item-start>
+		      <img src="{{goods.imageUrl}}">
+		    </ion-avatar>
+		    <h2>{{goods.imageUrl}}</h2>
+		    <h3>型号：{{goods.model}}</h3>
+		    <p class="overflow"><span class="fl">¥{{goods.price}}*{{goods.num}}</span><span class="fr">¥{{goods.total}}</span></p>
+		  </ion-item>
+		  <ion-item-options side="left">
+		    <button ion-button class="add" (click)="addCart(slidingItem,goods)"><ion-icon name="cart"></ion-icon> 加入购物车</button>
+		    <button ion-button class="remove" (click)="removeItem(goods.id)"><ion-icon name="trash"></ion-icon> 删除</button>
+		  </ion-item-options>
+		  <ion-item-options side="right">
+		    <button ion-button class="remove" (click)="removeItem(goods.id)"><ion-icon name="trash"></ion-icon> 删除</button>
+		    <button ion-button class="add" (click)="addCart(slidingItem,goods)"><ion-icon name="cart"></ion-icon> 加入购物车</button>
+		  </ion-item-options>
+	  </ion-item-sliding>
+	</ion-list>
+	</div>
+	<div *ngIf="goodsList.length==0" padding>
+	  	<p class="tj">您还没添加商品到收藏夹</p>
+	</div>
+</ion-content>
