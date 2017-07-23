@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>购物车</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content >
+	<div  *ngIf="goodsList.length>0">
+		<ion-list>
+		  <ion-item-sliding *ngFor="let goods of goodsList">
+			  <ion-item>
+			    <ion-avatar item-start>
+			      <img src="{{goods.imageUrl}}">
+			    </ion-avatar>
+			    <h2>{{goods.imageUrl}}</h2>
+			    <h3>型号：{{goods.model}}</h3>
+			    <p class="overflow"><span class="fl">¥{{goods.price}}*{{goods.num}}</span><span class="fr">¥{{goods.total}}</span></p>
+			  </ion-item>
+			  <ion-item-options side="left">
+			    <button ion-button class="remove" (click)="removeItem(goods.id)"><ion-icon name="trash"></ion-icon> 删除</button>
+			  </ion-item-options>
+			  <ion-item-options side="right">
+			    <button ion-button class="remove" (click)="removeItem(goods.id)"><ion-icon name="trash"></ion-icon> 删除</button>
+			  </ion-item-options>
+		  </ion-item-sliding>
+		</ion-list>
+	</div>
+	<div  *ngIf="goodsList.length==0" padding>
+	  	<p class="tj">您还没添加商品到购物车</p>
+	</div>
+</ion-content>
+<ion-footer	align="center" (tap)="settings()" no-border>
+  <div class="overflow" padding>
+  	<span class="fl">总计：¥{{totalMoney}}</span>
+  	<span class="fr">实付款：¥{{totalMoney}}</span>
+  </div>
+  <ion-toolbar>
+    <ion-title>订单结算</ion-title>
+  </ion-toolbar>
+</ion-footer>

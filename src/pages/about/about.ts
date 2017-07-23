@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { NavController, IonicPage } from 'ionic-angular';
+import { NavController, IonicPage} from 'ionic-angular';
+import { Storage } from '@ionic/storage';
 
 @IonicPage()
 @Component({
@@ -9,36 +10,49 @@ import { NavController, IonicPage } from 'ionic-angular';
 export class AboutPage {
   name: string = "小李";
   base64Image: any = "http://www.gravatar.com/avatar?d=mm&s=140";
-  
-  constructor(public navCtrl: NavController) {
-
+  loginType:any;
+  constructor(public navCtrl: NavController,public storage: Storage) {
+  }
+  ionViewDidLoad(){
+    console.log('ionViewDidLoad AboutPage');
   }
 
-  PersonalPage() {
-   this.checkLogin();
-  }
-
+  //我的订单
   myOrdersPage() {
-   this.checkLogin();
+  	this.checkLogin('OrdersPage',null);
   }
-
+  //购物车
   myCartPage() {
-   this.checkLogin();
+  	this.checkLogin('CartPage',null);
   }
-
+  //我的求购
   myQueryPage() {
-    this.checkLogin();
+  	this.checkLogin('QueryPage',null);
   }
-
+  //地址簿
+  myAddressPage(){
+  	this.checkLogin('AddressPage',null);
+  }
+  //我的收藏
   myCollectPage() {
-    this.checkLogin();
+  	this.checkLogin('CollectPage',null);
   }
-
-  mySettingPage() {
-    this.checkLogin();
+  //修改密码
+  gotoChangePassPage(){
+  	this.checkLogin('ChangePassPage',null);
   }
-
-  checkLogin() {
-     this.navCtrl.push( 'ChangePassPage' );
+  //判断是否登录
+  checkLogin(page,sub) {
+     //this.navCtrl.push( 'ChangePassPage' );
+     this.storage.get('loginType').then((val) => {
+          this.loginType = val;//登录状态
+			if(this.loginType!=true){
+				this.navCtrl.push( 'LoginPage' );
+			}else{
+				if(page!=null){
+  					this.navCtrl.push(page,sub);
+				}
+			}
+     })
   }
 }
