@@ -1,14 +1,15 @@
+import { CustomerService } from './../providers/customer/customer-service';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule} from '@angular/http' 
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { IonicStorageModule } from '@ionic/storage';
 import { MyApp } from './app.component';
-
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { CustomerService } from '../providers/customer-service/customer-service';
-
+import { CatalogService } from '../providers/catalog/catalog-service';
+import { BrandsService } from '../providers/brands/brands-service';
+import { CompanyService } from '../providers/company/company-service';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,10 @@ import { CustomerService } from '../providers/customer-service/customer-service'
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    CustomerService
+     CatalogService,
+     BrandsService,
+     CompanyService,
+     CustomerService
   ]
 })
 export class AppModule {}

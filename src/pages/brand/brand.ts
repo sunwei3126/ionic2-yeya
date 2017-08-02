@@ -1,69 +1,62 @@
+import { BrandsService } from './../../providers/brands/brands-service';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
-/**
- * Generated class for the BrandPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
 @IonicPage()
 @Component({
   selector: 'page-brand',
   templateUrl: 'brand.html',
 })
 export class BrandPage {
-  brands:any;
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-  	this.brands = this.getBrands();
-  }
+  brands:Array<any>;
+	
+	title:string;
+  category:any;
+	currentPage:number = 1;
+	pageSize:number = 8;
+	totalPages:number = 0;
 
+  constructor(public navCtrl: NavController, public navParams: NavParams, public brandService:BrandsService) {
+		this.category = this.navParams.get("category");
+		this.title = `${this.category.type1} ${this.category.type2}`;
+		this.getBrands(this.currentPage);
+	}
+	
   ionViewDidLoad() {
-    console.log('ionViewDidLoad BrandPage');
-  }
-  getBrands(){
-  	return [{
-  		id:1,
-  		img:'assets/img/brand/brand.jpg'
-  	},{
-  		id:2,
-  		img:'assets/img/brand/brand.jpg'
-  	},{
-  		id:3,
-  		img:'assets/img/brand/brand.jpg'
-  	},{
-  		id:4,
-  		img:'assets/img/brand/brand.jpg'
-  	},{
-  		id:5,
-  		img:'assets/img/brand/brand.jpg'
-  	},{
-  		id:6,
-  		img:'assets/img/brand/brand.jpg'
-  	}]
-  }
+		
+	}
+	
+  getBrands(page:number){
+			let specfilter = {
+		    brand_category: this.category.id,
+		   	page: page,
+		  	pageSize:this.pageSize,
+	 	 }
+     return new Promise(resolve => {
+    	this.brandService.getBrands(specfilter).subscribe(res => {
+				if(!this.brands)
+					this.brands=[];
+				this.brands=this.brands.concat(res.brands);
+				this.totalPages = res.totalPages
+				resolve();
+			})});
+	}
+	
    //下拉刷新
   doRefresh(refresher) {
-	     setTimeout(() => {
-	       for (var i = 0; i < 3; i++) {
-	         this.brands.unshift({
-		  		id:(this.brands.length+1),
-		  		img:'assets/img/brand/brand.jpg'
-		  	});
-	      }
-	      refresher.complete();
-	    }, 2000);
-  }
+	    this.currentPage = 1;
+			this.brands=[];
+	    this.getBrands(this.currentPage).then(()=>refresher.complete());
+	}
+		
   //上拉加载
   doInfinite(refresher) {
-	     setTimeout(() => {
-	       for (var i = 0; i < 3; i++) {
-	         this.brands.push({
-		  		id:(this.brands.length+1),
-		  		img:'assets/img/brand/brand.jpg'
-		  	});
-	      }
-	      refresher.complete();
-	    }, 2000);
-  }
+	 	this.currentPage++;
+		if(this.currentPage > this.totalPages) {
+			refresher.complete();
+		} else {
+		 this.getBrands(this.currentPage).then(() => refresher.complete());
+		}
+	}
+	
 }

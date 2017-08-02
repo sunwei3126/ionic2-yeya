@@ -1,6 +1,6 @@
 <ion-header [class.headanimate]="tabanimate">
   <ion-navbar no-border-bottom>
-    <ion-searchbar [showCancelButton]="true" placeholder="搜索"></ion-searchbar>
+    <ion-searchbar [showCancelButton]="true" placeholder="搜索" ></ion-searchbar>
      <ion-buttons end>
       <button ion-button large>
         <ion-icon ios="ios-cart" md="md-cart"></ion-icon>
@@ -46,11 +46,12 @@
   <ion-list>
     <ion-item *ngFor="let product of products" (click)="gotoProductDetails(product)">
       <ion-thumbnail item-start>
-          <img [src]="product.imageUrl">
+         	<img *ngIf="product.images && product.images.length > 0" [src]="product.images[0].src">
+					<img *ngIf="!product.images || product.images.length == 0" src="assets/img/products/default-image.png">
       </ion-thumbnail>
-      <h2>{{product.productName}}</h2>
-       <p>型号：A-VBSE/TR/PI 38</p>
-       <p>库存：{{product.stock}}件 &nbsp;</p>
+      <h2>{{product.name}}</h2>
+       <p>型号：{{product.sku}}</p>
+       <p>库存：{{product.stock_quantity}}件 &nbsp;</p>
 			 <p>价格：{{product.price}}元 &nbsp;</p>
     </ion-item>
   </ion-list>

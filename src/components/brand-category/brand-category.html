@@ -1,0 +1,7 @@
+<ion-grid>
+	  <ion-row class="categories">
+	    <ion-col col-4 *ngFor="let cate of categories" (click)="showCategory(cate)">
+	    		{{cate.type1}}<br />{{cate.type2}} 
+	    </ion-col>
+	  </ion-row>
+	</ion-grid>

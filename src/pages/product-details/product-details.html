@@ -1,27 +1,48 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>{{product.productName}}</ion-title>
+    <ion-title>{{product.name}}</ion-title>
   </ion-navbar>
 </ion-header>
 <ion-content padding-bottom>
   <ion-card>
-        <img [src]='product.imageUrl'>
+         <img *ngIf="product.images && product.images.length > 0" [src]="product.images[0].src">
+         <img *ngIf="!product.images || product.images.length == 0" src="assets/img/products/default-image.png">
+
         <ion-fab right top>
             <button ion-fab (click)="addToFavourite(product)">
               <ion-icon name="heart"></ion-icon>
             </button> 
         </ion-fab>
          <ion-item>
-            <p> 价格：{{product.price}}</p>
-            <p> 库存：500</p>
+             <p text-wrap> 描述：{{product.short_description}}</p>
+             <p> 型号: {{product.sku}}</p>
+             <p> 价格：{{product.price}}</p>
+             <p> 库存：{{product.stock_quantity}}</p>
         </ion-item>
         <ion-item> 
             <h2>商品详情</h2>
-            <p>sfsfs</p>
+           <div text-wrap [innerHTML]="product.full_description"></div>
         </ion-item>
         <ion-item>
            <h2>商品规格</h2>
-           <p>SFSFS</p>
+           <div>
+            <table class="data-table">
+                <colgroup>
+                    <col width="40%" />
+                    <col />
+                </colgroup>
+                <tbody>
+                   <tr *ngFor="let spec of product.specs;let i = index" [class.odd]="i%2!=0" [class.even]="i%2==0">
+                      <td class="spec-name">
+                          {{ spec.spec_name }}
+                      </td>
+                       <td class="spec-value">
+                          {{ spec.spec_value }}
+                      </td>
+                   </tr>
+                </tbody>
+             </table>
+           </div>
         </ion-item>
         <ion-grid>
             <ion-row>
@@ -36,6 +57,5 @@
         </ion-grid>
 
         <button ion-button block (click)="addToCarts(product,count)"><ion-icon name="cart" ></ion-icon>加入购物车</button>
-
     </ion-card>
 </ion-content>

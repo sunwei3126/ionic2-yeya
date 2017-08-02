@@ -1,12 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
-/**
- * Generated class for the BrandPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
 @IonicPage()
 @Component({
   selector: 'page-find-goods',
@@ -19,7 +13,9 @@ export class FindGoodsPage {
   }
 
   ionViewDidLoad() {
+
   }
+
   getFindGoods(){
   	return [{
   		id:1,
@@ -59,7 +55,8 @@ export class FindGoodsPage {
   		type2:"杂症"
   	}];
   }
-  gotoContactExpertsShow(id){
-  	 this.navCtrl.push("ContactExpertsPage", {id:id});
+
+  gotoContactExpertsShow(category){
+  	 this.navCtrl.push("ContactExpertsPage", {category:category});
   }
 }

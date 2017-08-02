@@ -1,5 +1,8 @@
+import { Storage } from '@ionic/storage';
+import { CustomerService } from './../../providers/customer/customer-service';
+import { CustomerProvider } from './../../providers/customer/customer';
 import { Component } from '@angular/core';
-import { NavController, IonicPage } from 'ionic-angular';
+import { NavController, IonicPage, LoadingController, Loading } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -8,11 +11,27 @@ import { NavController, IonicPage } from 'ionic-angular';
 })
 export class AddressPage {
 	addressList:any;
-    constructor(public navCtrl: NavController) {
-    		this.addressList = this.getAddressList();
+	customer:any;
+    loading:Loading;
+	constructor(public navCtrl: NavController, 
+		public loadingCtl: LoadingController,
+		public storage: Storage,
+		public customerService:CustomerService) {
+	  
+	    this.loading = this.loadingCtl.create({
+            content: '稍等...'
+        });
+
 	}
 	ionViewDidLoad(){
-   	 console.log('ionViewDidLoad AddressPage');
+		  this.loading.present();
+		  this.storage.get('customer').then((val) => {
+              this.customerService.GetCustomerById(val.id).subscribe(res=>{
+				  this.loading.dismiss();
+				  this.customer = res.customers[0];
+				  this.addressList = this.customer.addresses;
+			  });
+         });
     }
 	getAddressList(){
 		return [{

@@ -1,90 +1,60 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { CompanyService } from "../../providers/company/company-service";
 
-/**
- * Generated class for the CompanyPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
 @IonicPage()
 @Component({
   selector: 'page-company',
   templateUrl: 'company.html',
 })
 export class CompanyPage {
-  companys:any;
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-  	this.companys = this.getCompanys();
+
+	companys:Array<any>;
+	title:string;
+  category:any;
+	currentPage:number = 1;
+	pageSize:number = 9;
+	totalPages:number = 0;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, public companyService: CompanyService) {
+  	this.category = this.navParams.get("category");
+		this.title = `${this.category.type1} ${this.category.type2}`;
+		this.getCompanys(this.currentPage);
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad CompanyPage');
-  }
-  getCompanys(){
-  	return [{
-  		name:"上海特格液压传动控制有限公司1",
-  		url:"WWW.TRAGONPTC.COM",
-  		tel:"021-61700611",
-  		mainCore:"力士乐品牌 产品"
-  	},{
-  		name:"上海特格液压传动控制有限公司2",
-  		url:"WWW.TRAGONPTC.COM",
-  		tel:"021-61700611",
-  		mainCore:"力士乐品牌 产品"
-  	},{
-  		name:"上海特格液压传动控制有限公司3",
-  		url:"WWW.TRAGONPTC.COM",
-  		tel:"021-61700611",
-  		mainCore:"力士乐品牌 产品"
-  	},{
-  		name:"上海特格液压传动控制有限公司4",
-  		url:"WWW.TRAGONPTC.COM",
-  		tel:"021-61700611",
-  		mainCore:"力士乐品牌 产品"
-  	},{
-  		name:"上海特格液压传动控制有限公司5",
-  		url:"WWW.TRAGONPTC.COM",
-  		tel:"021-61700611",
-  		mainCore:"力士乐品牌 产品"
-  	},{
-  		name:"上海特格液压传动控制有限公司6",
-  		url:"WWW.TRAGONPTC.COM",
-  		tel:"021-61700611",
-  		mainCore:"力士乐品牌 产品"
-  	},{
-  		name:"上海特格液压传动控制有限公司7",
-  		url:"WWW.TRAGONPTC.COM",
-  		tel:"021-61700611",
-  		mainCore:"力士乐品牌 产品"
-  	}];
-  }
-  //下拉刷新
+	}
+	
+  getCompanys(page:number){
+			let specfilter = {
+		    brand_category: this.category.id,
+		   	page: page,
+		  	pageSize:this.pageSize,
+	 	 }
+     return new Promise(resolve => {
+    	this.companyService.getCompanys(specfilter).subscribe(res => {
+				if(!this.companys)
+					this.companys=[];
+				this.companys = this.companys.concat(res.company);
+				this.totalPages = res.totalPages
+				resolve();
+			})});
+	}
+	
+   //下拉刷新
   doRefresh(refresher) {
-	     setTimeout(() => {
-	       for (var i = 0; i < 3; i++) {
-	         this.companys.unshift({
-		  		name:"上海特格液压传动控制有限公司"+(this.companys.length+1),
-		  		url:"WWW.TRAGONPTC.COM",
-		  		tel:"021-61700611",
-		  		mainCore:"力士乐品牌 产品"
-		  	});
-	      }
-	      refresher.complete();
-	    }, 2000);
-  }
+	    this.currentPage = 1;
+			this.companys=[];
+	    this.getCompanys(this.currentPage).then(()=>refresher.complete());
+	}
+		
   //上拉加载
   doInfinite(refresher) {
-	     setTimeout(() => {
-	       for (var i = 0; i < 3; i++) {
-	         this.companys.push({
-		  		name:"上海特格液压传动控制有限公司"+(this.companys.length+1),
-		  		url:"WWW.TRAGONPTC.COM",
-		  		tel:"021-61700611",
-		  		mainCore:"力士乐品牌 产品"
-		  	});
-	      }
-	      refresher.complete();
-	    }, 2000);
-  }
+	 	this.currentPage++;
+		if(this.currentPage > this.totalPages) {
+			refresher.complete();
+		} else {
+		 this.getCompanys(this.currentPage).then(() => refresher.complete());
+		}
+	}
 }

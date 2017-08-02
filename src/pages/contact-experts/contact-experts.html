@@ -1,16 +1,25 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>联系专家</ion-title>
+    <ion-title>{{title}}</ion-title>
   </ion-navbar>
 </ion-header>
 <ion-content>
-	<ion-card *ngFor="let expert of experts">
-	  <ion-item>
+		<ion-refresher (ionRefresh)="doRefresh($event)">
+      <ion-refresher-content
+        pullingIcon="arrow-dropdown"
+        pullingText="获取最新数据..."
+        refreshingSpinner="circles"
+        refreshingText="刷新完毕">
+      </ion-refresher-content>
+		</ion-refresher>
+		<div *ngIf="experts">
+  	<ion-card *ngFor="let expert of experts">
+	   <ion-item>
 	    <ion-avatar item-start>
-	      <img src="{{expert.img}}">
+	      <img src="https://avatars2.githubusercontent.com/u/11835988?v=3&u=2a181779eb2164666606366a1df31f9c17cf7a20&s=100">
 	    </ion-avatar>
 	    <h2>{{expert.name}}</h2>
-	    <p>{{expert.goodAt}}</p>
+	    <p>{{expert.expertIn}}</p>
 	  </ion-item>
 	  <div class="experts-padding">
 		  <ion-row>
@@ -37,6 +46,19 @@
 		    		<a>复制</a>
 		    </ion-col>
 		  </ion-row>
-	  </div>
-	</ion-card>
+		</div>
+	  </ion-card>
+	</div>
+  <div *ngIf="(!experts) || (experts && experts.length == 0)" padding>
+  	<p class="tj">此板块还没有达人进驻。</p>
+  </div>
+
+  <!--上拉加载-->
+	<ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+      <ion-infinite-scroll-content
+        loadingSpinner="bubbles"
+        loadingText="加载更多数据...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+    <!--end-->
 </ion-content>

@@ -1,7 +1,7 @@
 page-search {
    .search-list .item-ios h2{ min-height: 48px; white-space: normal;}
    .search-list .item-ios ion-thumbnail ion-img,.search-list .item-ios ion-thumbnail img{ width:80px;height: 80px;}
-   .search-list .name{ font-size: 16px;}
+   .search-list .name { font-size: 16px;}
    .search-list .money{ font-size: 18px;}
    .search-list .item-block{ align-items: baseline;  -webkit-align-items: baseline; -ms-flex-align: baseline;}
    .search-type{ text-align:center; background-color: #eaeaea;}
@@ -13,4 +13,7 @@ page-search {
    .red{color:#f53d3d;}
    .tj{ margin-top: 60px; font-size: 14px; text-align: center;}
    .probtn{ margin-top: 140px;}
+   .img-center {
+		margin-left: 46%;
+	}
 }

@@ -6,7 +6,7 @@
 <ion-content padding>
 	<ion-grid>
 	  <ion-row class="find-goods">
-	    <ion-col col-4 *ngFor="let findGood of findGoods" (click)="gotoContactExpertsShow(findGood.id)">
+	    <ion-col col-4 *ngFor="let findGood of findGoods" (click)="gotoContactExpertsShow(findGood)">
 	    		{{findGood.type1}}<br />{{findGood.type2}} 
 	    </ion-col>
 	  </ion-row>

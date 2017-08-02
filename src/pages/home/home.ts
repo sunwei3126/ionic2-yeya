@@ -1,5 +1,7 @@
+import { CatalogService } from './../../providers/catalog/catalog-service';
 import { Component, ChangeDetectorRef } from '@angular/core';
 import { NavController, IonicPage } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
 
 @IonicPage()
 @Component({
@@ -7,36 +9,36 @@ import { NavController, IonicPage } from 'ionic-angular';
   templateUrl: 'home.html'
 })
 export class HomePage {
-
   products: Array<any>;
   tabanimate:Boolean=false;
   old_scrollTop = 0;
 
-  constructor(public navCtrl: NavController, public ref: ChangeDetectorRef) {
-  this.products = [
-                   {productName:"平衡阀", price:500, listPrice:800, stock:800, imageUrl:"assets/img/products/test.jpeg"},
-                   {productName:"比例阀与伺服阀", price:500, listPrice:800, stock:800, imageUrl:"assets/img/products/test2.jpeg" },
-                   {productName:"平衡阀", price:500, listPrice:800, stock:800, imageUrl:"assets/img/products/test.jpeg"},
-                   {productName:"比例阀与伺服阀", price:500, listPrice:800, stock:800, imageUrl:"assets/img/products/test2.jpeg" },
-                   {productName:"平衡阀", price:500, listPrice:800, stock:800, imageUrl:"assets/img/products/test.jpeg"},
-                   {productName:"比例阀与伺服阀", price:500, listPrice:800, stock:800, imageUrl:"assets/img/products/test2.jpeg" },
-                  ];
+  constructor(public navCtrl: NavController, public ref: ChangeDetectorRef, public catalogService:CatalogService, public storage:Storage) {
+    this.catalogService.getPopularProducts(10).subscribe(res=>this.products = res.products);
   }
 
-
   gotoCompanyShow() {
-    this.navCtrl.push("CompanyPage");
+    this.navCtrl.push("CompanysAllPage");
   }
 
   gotoBrandShow() {
-    this.navCtrl.push("BrandPage");
+    this.navCtrl.push("BrandsAllPage");
   }
+
   gotoWantBuyShow(){
-    this.navCtrl.push("WantBuyPage");
+     this.storage.get('loginType').then(val => {
+			if(val != true){
+				this.navCtrl.push( 'LoginPage' );
+			}else{
+		    this.navCtrl.push("WantBuyPage");
+			}
+    });
   }
+
   gotoFindGoodsShow(){
     this.navCtrl.push("FindGoodsPage");
   }
+
   onScroll($event: any) {
     var scrollTop = $event.scrollTop;
     if (scrollTop > 50 && (this.old_scrollTop - scrollTop) < 0) {

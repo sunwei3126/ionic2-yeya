@@ -4,46 +4,54 @@
   </ion-navbar>
 </ion-header>
 <ion-content padding>
-	<div class="list-tit">
-		求购日期
+
+ <form [formGroup]="inquery" (ngSubmit)="postInquery()">
+
+  <div class="list-tit">
+		求购标题
 	</div>
-	<ion-row class="time">
-		<ion-col col-5 class="date">
-		  <ion-datetime displayFormat="YYYY MM DD" [(ngModel)]="formval.timeStarts"></ion-datetime>
-		 </ion-col>
-		 <ion-col col-2 class="center">
-		 	 至
-		  </ion-col>
-		  <ion-col col-5 class="date">
-		 	 <ion-datetime displayFormat="YYYY MM DD" [(ngModel)]="formval.timeEnds"></ion-datetime>
-		  </ion-col>
-	</ion-row>
+	<div ion-item>
+		<ion-input class="buy-input"  formControlName="title" type="text"></ion-input>
+	</div>
+
 	<div class="list-tit">
 		产品类型
 	</div>
-	<div>
-		<ion-select [(ngModel)]="formval.type" class="select-type">
-	        <ion-option value="液压阀">液压阀</ion-option>
-			<ion-option value="液压阀1">液压阀1</ion-option>
-			<ion-option value="液压阀2">液压阀2</ion-option>
-			<ion-option value="液压阀3">液压阀3</ion-option>
-			<ion-option value="液压阀4">液压阀4</ion-option>
-			<ion-option value="液压阀5">液压阀5</ion-option>
+	<div ion-item>
+		<ion-select formControlName="category_id" class="select-type">
+	    <ion-option *ngFor="let opt of categoryOptions"  value="{{opt.value}}">{{opt.label}}</ion-option>
 	    </ion-select>
-	</div>
+	 </div>
+
 	<div class="list-tit">
 		产品品牌
 	</div>
-	<div>
-		<ion-input class="buy-input" [(ngModel)]="formval.brand" type="text"></ion-input>
+	<div ion-item>
+		<ion-input class="buy-input"  formControlName="brand" type="text"></ion-input>
 	</div>
+
 	<div class="list-tit">
 		产品型号
 	</div>
-	<div>
-		<ion-input class="buy-input" [(ngModel)]="formval.model" type="text"></ion-input>
+	<div ion-item>
+		<ion-input class="buy-input"  formControlName="sku" type="text"></ion-input>
 	</div>
-	<div class="buy-btn">
-	  <button block ion-button full>发布</button>
+
+	<div class="list-tit">
+		数量
 	</div>
+	<div ion-item>
+		<ion-input class="buy-input"   formControlName="quantity"  type="text"></ion-input>
+	</div>
+
+  <div class="list-tit">
+		有效天数
+	</div>
+	<div ion-item>
+		<ion-input class="buy-input"   formControlName="valid_days"  type="text"></ion-input>
+	</div>
+
+	 <button ion-button type="submit" [disabled]="!inquery.valid" block  full>发布</button>
+	 
+	</form>
 </ion-content>

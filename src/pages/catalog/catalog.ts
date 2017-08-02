@@ -1,6 +1,8 @@
+import { CatalogService } from './../../providers/catalog/catalog-service';
 import { Http } from '@angular/http';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+
 
 /**
  * Generated class for the CatalogPage page.
@@ -14,15 +16,15 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'catalog.html',
 })
 export class CatalogPage {
- topCategories:Array<any>;
+  topCategories:Array<any>;
   topCategory:any;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public http:Http) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public http:Http, public catalogService:CatalogService) {
    
   }
+
   ionViewDidLoad() {
-     this.http.get("http://localhost:15536/api/categories").subscribe(res => {
-        var root = res.json();
-        this.topCategories = root.categories;
+    this.catalogService.getAllCatalogs().subscribe(res => {
+        this.topCategories = res.categories;
         var initialItem = this.topCategories[0];
         this.showSubCategories(initialItem)
       })
@@ -34,8 +36,8 @@ export class CatalogPage {
     this.topCategory = item;
   }
 
-  gotoSearchPage(item:any) {
-   this.navCtrl.push("SearchPage",{name:item.name});
+  gotoSearchPage(item: any) {
+    this.navCtrl.push("SearchPage",  { item: item });
   }
 
 }

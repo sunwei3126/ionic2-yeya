@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>公司展示</ion-title>
+    <ion-title>{{title}}</ion-title>
   </ion-navbar>
 </ion-header>
 <ion-content>
@@ -17,16 +17,16 @@
     <ion-card *ngFor="let company of companys" class="comapny-list">
 	  <ion-card-content>
 	    <ion-card-title>
-	      {{company.name}}
+	      <h2>{{company.name}}</h2>
 	    </ion-card-title>
 	    <p>
-	      {{company.url}}
+	      {{company.website}}
 	    </p>
 	    <p>
-	      {{company.tel}}
+	      {{company.telphone}}
 	    </p>
 	    <p>
-	    	公司主营：{{company.mainCore}}
+	    	公司主营：{{company.business_scope}}
 	    </p>
 	  </ion-card-content>
 	</ion-card>
@@ -34,7 +34,7 @@
 	<ion-infinite-scroll (ionInfinite)="doInfinite($event)">
       <ion-infinite-scroll-content
         loadingSpinner="bubbles"
-        loadingText="Loading more data...">
+        loadingText="加载更多数据...">
       </ion-infinite-scroll-content>
     </ion-infinite-scroll>
     <!--end-->
