@@ -1,6 +1,4 @@
-import { SafeResourceUrl } from '@angular/platform-browser';
 import { CatalogService } from './../../providers/catalog/catalog-service';
-import { Observable } from 'rxjs/Observable';
 import { Component } from '@angular/core';
 import { NavController, IonicPage ,NavParams} from 'ionic-angular';
 

@@ -66,7 +66,7 @@ export class TabsPage {
 
 presentToast() {
    let toast = this.toastCtl.create( {
-     message: '再次点击返回推出APP',
+     message: '再次点击退出APP',
      duration: 2000
    });
    toast.present();
