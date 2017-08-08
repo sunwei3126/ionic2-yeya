@@ -17,12 +17,9 @@ export class LoginPage {
     public loadingCtrl:LoadingController,
     public events: Events,
     public navParams: NavParams, public alertCtrl:AlertController, public storage: Storage, public customerService:CustomerService) {
-  
-    this.returnPage = navParams.get('returnUrl');
   }
 
   ionViewDidLoad() {
-
   }
 
   login() {
@@ -30,7 +27,6 @@ export class LoginPage {
     this.customerService.Login(this.name,this.pass).subscribe(res=>{
         this.loading.dismiss();
         if(res.customer) {
-            this.customerService.customer = res.customer;
             this.storage.set('loginType', true);//登录状态
             this.storage.set('customer', res.customer)
             this.navCtrl.pop(); //返回上一页
@@ -38,9 +34,7 @@ export class LoginPage {
             this.storage.set('loginType', false);
             this.presentAlert(res.login_result)
         }
-
         this.events.publish("user:login", this.name);
-
       }
     )
   }
@@ -56,7 +50,7 @@ export class LoginPage {
   let alert = this.alertCtrl.create({
     title: '登录',
     subTitle: errMsg,
-    buttons: ['取消']
+    buttons: ['']
   });
   alert.present();
 }

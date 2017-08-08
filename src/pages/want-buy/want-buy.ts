@@ -1,8 +1,10 @@
+import { Storage } from '@ionic/storage';
+import { NumberValidator } from './../../validators/number';
 import { CustomerService } from './../../providers/customer/customer-service';
 import { CatalogService } from './../../providers/catalog/catalog-service';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController, AlertController, Loading } from 'ionic-angular';
-import {Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 
 @IonicPage()
 @Component({
@@ -10,22 +12,21 @@ import {Validators, FormBuilder, FormGroup } from '@angular/forms';
   templateUrl: 'want-buy.html',
 })
 export class WantBuyPage {
-  private inquery : FormGroup;
-  private categoryOptions:Array<SelectOption>=[];
-  private loading:Loading;
-
+   inquery : FormGroup;
+   categoryOptions:Array<SelectOption>=[];
+   loading:Loading;
+   submitAttempt = false;
   constructor(public navCtrl: NavController, public formBuilder:FormBuilder, 
               public loadingCtrl:LoadingController,
               public alertCtrl:AlertController,
-              public navParams: NavParams, public catalogService: CatalogService, public customerService:CustomerService) {
-
+              public navParams: NavParams, public catalogService: CatalogService, public storage:Storage) {
       this.inquery = this.formBuilder.group({
-      valid_days: ['1'],
-      title: ['', Validators.required],
+      valid_days: ['1',Validators.compose([NumberValidator.isValid, Validators.required])],
+      title: ['',Validators.required],
       category_id: ['',Validators.required],
       brand: [''],
       sku: [''],
-      quantity: ['',Validators.required],
+      quantity: ['1', Validators.compose([NumberValidator.isValid, Validators.required])],
     });
   }
 
@@ -54,9 +55,10 @@ export class WantBuyPage {
    }
 
    postInquery() {
-      this.presentLoading();
-      var customer = this.customerService.customer;
-      var newInquery = this.inquery.value;
+     this.submitAttempt =true;
+     this.presentLoading();
+     this.storage.get("customer").then(customer=>{
+     var newInquery = this.inquery.value;
       newInquery.customer_id = customer.id;
       this.catalogService.createInquery(newInquery).subscribe(res=>{
         this.loading.dismiss();
@@ -66,14 +68,15 @@ export class WantBuyPage {
          this.presentAlert("求购创建成功!");
          this.navCtrl.pop();
         }
-      });
-  }
+       });
+      })
+   }
 
  presentAlert(msg:string) {
   let alert = this.alertCtrl.create({
     title: '求购',
     subTitle: msg,
-    buttons: ['取消']
+    buttons: ['确定']
   });
   alert.present();
   }

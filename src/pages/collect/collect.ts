@@ -1,3 +1,5 @@
+import { Storage } from '@ionic/storage';
+import { CustomerService } from './../../providers/customer/customer-service';
 import { Component } from '@angular/core';
 import { NavController, IonicPage,AlertController,ItemSliding } from 'ionic-angular';
 
@@ -7,23 +9,24 @@ import { NavController, IonicPage,AlertController,ItemSliding } from 'ionic-angu
   templateUrl: 'collect.html'
 })
 export class CollectPage {
-	goodsList:any;//购物车商品
-    constructor(public navCtrl: NavController,public alertCtrl: AlertController) {
-    		this.goodsList = this.getGoodsList();
+	goodsList:Array<any>=[];
+  constructor(public navCtrl: NavController,public alertCtrl: AlertController, public customerService:CustomerService, public storage:Storage) {
+    	 
 	}
+
 	ionViewDidLoad(){
-   	 console.log('ionViewDidLoad CartPage');
-    }
+    this.getGoodsList();
+	}
+	
 	//获取购物车商品
 	getGoodsList(){
-		return [
-			{id:1,productName:"比例阀与伺服阀",model:"xxxxx234234fe", price:500, num:2,total:1000, imageUrl:"assets/img/products/test2.jpeg" },
-			{id:2,productName:"比例阀与伺服阀",model:"xxxxx234234fe", price:500, num:1,total:500, imageUrl:"assets/img/products/test.jpeg" },
-			{id:3,productName:"比例阀与伺服阀",model:"xxxxx234234fe", price:500, num:4,total:2000, imageUrl:"assets/img/products/test2.jpeg" },
-			{id:4,productName:"比例阀与伺服阀",model:"xxxxx234234fe", price:500, num:2,total:1000, imageUrl:"assets/img/products/test2.jpeg" },
-			{id:5,productName:"比例阀与伺服阀",model:"xxxxx234234fe", price:500, num:1,total:500, imageUrl:"assets/img/products/test.jpeg" },
-			{id:6,productName:"比例阀与伺服阀",model:"xxxxx234234fe", price:500, num:4,total:2000, imageUrl:"assets/img/products/test2.jpeg" },
-		];
+      this.storage.get("customer").then(customer => {
+	    this.customerService.getShoppingCartByCustomerId(customer.id).subscribe(res=>{
+				 this.goodsList = res.shopping_carts;
+					console.log('display goodslist');
+					console.log(this.goodsList);
+	     	});
+	   })
 	}
 	//从收藏夹移除
 	removeItem(id){

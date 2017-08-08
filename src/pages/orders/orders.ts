@@ -1,4 +1,6 @@
+import { CustomerService } from './../../providers/customer/customer-service';
 import { Component } from '@angular/core';
+import { Storage } from '@ionic/storage';
 import { NavController, IonicPage } from 'ionic-angular';
 
 @IonicPage()
@@ -8,43 +10,39 @@ import { NavController, IonicPage } from 'ionic-angular';
 })
 export class OrdersPage {
 	orders:any;
-    constructor(public navCtrl: NavController) {
-    		this.orders = this.getOrders();
+    constructor(public navCtrl: NavController,public customerService:CustomerService, public storage:Storage) {
+    	this.getOrders();
 	}
+
 	ionViewDidLoad(){
-   	 console.log('ionViewDidLoad OrdersPage');
-    }
+
+	}
+
 	getOrders(){
-		return [{
-			id:"1",
-			type:"已完成",
-			time:"2017/7/20 21:05:43",
-			money:"4036.99"
-		},{
-			id:"2",
-			type:"已完成",
-			time:"2017/7/20 21:05:43",
-			money:"4036.99"
-		},{
-			id:"3",
-			type:"已完成",
-			time:"2017/7/22 21:05:43",
-			money:"4036.99"
-		},{
-			id:"4",
-			type:"已完成",
-			time:"2017/7/23 21:05:43",
-			money:"4036.99"
-		},{
-			id:"5",
-			type:"已完成",
-			time:"2017/7/25 21:05:43",
-			money:"4036.99"
-		},{
-			id:"6",
-			type:"已完成",
-			time:"2017/7/26 21:05:43",
-			money:"4036.99"
-		}];
+       this.storage.get("customer").then(customer => {
+	    this.customerService.getOrdersByCustomerId(customer.id).subscribe(res=>{
+			this.orders = res.orders;
+	     	});
+	   })
+	}
+
+
+	formatOrderStatus(status:string) {
+	   if(status==="Pending") {
+		   return "待处理";
+	   }
+
+	   if(status==="Complete") {
+		   return "已完成";
+	   }
+	
+	    if(status==="Cancelled") {
+		   return "已取消";
+	   }
+
+       if(status==="Processing") {
+		   return "处理中";
+	   }
+       return status;
 	}
 }

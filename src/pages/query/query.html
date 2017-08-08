@@ -4,11 +4,16 @@
   </ion-navbar>
 </ion-header>
 <ion-content>
+	<div class="img-center" *ngIf="!querys">
+		<img height="35" src="assets/img/ring.svg">
+	</div>
+
+
   <ion-item-group *ngFor="let query of querys">
-    <ion-item-divider color="light">{{query.name}}</ion-item-divider>
-    <ion-item>求购型号：{{query.type}}</ion-item>
+    <ion-item-divider color="light">{{query.title}}</ion-item-divider>
+    <ion-item>求购型号：{{query.sku}}</ion-item>
     <ion-item>求购品牌：{{query.brand}}</ion-item>
-    <ion-item>求购数量：{{query.num}}</ion-item>
-    <ion-item>发布日期：{{query.time}}</ion-item>
+    <ion-item>求购数量：{{query.quantity}}</ion-item>
+    <ion-item>发布日期：{{query.created_on  | date: 'yyyy-MM-dd HH:mm' }}</ion-item>
   </ion-item-group>
 </ion-content>

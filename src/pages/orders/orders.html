@@ -4,10 +4,13 @@
   </ion-navbar>
 </ion-header>
 <ion-content>
+	<div class="img-center" *ngIf="!orders">
+		<img height="35" src="assets/img/ring.svg">
+	</div>
   <ion-item-group *ngFor="let order of orders">
     <ion-item-divider color="light">订单编号：{{order.id}}</ion-item-divider>
-    <ion-item>订单状态：{{order.type}}</ion-item>
-    <ion-item>下单时间：{{order.time}}</ion-item>
-    <ion-item>订单总额：¥{{order.money}}</ion-item>
+    <ion-item>订单状态：{{formatOrderStatus(order.order_status)}}</ion-item>
+    <ion-item>下单时间：{{order.created_on_utc | date: 'yyyy-MM-dd HH:mm'}}</ion-item>
+    <ion-item>订单总额：¥{{order.order_total}}</ion-item>
   </ion-item-group>
 </ion-content>

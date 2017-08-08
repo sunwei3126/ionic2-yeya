@@ -1,5 +1,5 @@
-import { Config } from './../config/config-service';
 import { Observable } from 'rxjs/Observable';
+import { Config } from './../config/config-service';
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
@@ -43,5 +43,4 @@ export class CatalogService {
   createInquery(inquery:any) {
      return  this.http.post(this.inqueryCreateURI,inquery).map(response => response.json());
   }
-
 }

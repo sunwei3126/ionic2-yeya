@@ -1,3 +1,5 @@
+import { CustomerService } from './../../providers/customer/customer-service';
+import { Storage } from '@ionic/storage';
 import { Component } from '@angular/core';
 import { NavController, IonicPage } from 'ionic-angular';
 
@@ -8,41 +10,18 @@ import { NavController, IonicPage } from 'ionic-angular';
 })
 export class QueryPage {
 	querys:any;
-    constructor(public navCtrl: NavController) {
-    		this.querys = this.getQuerys();
+	constructor(public navCtrl: NavController, public customerService:CustomerService, public storage:Storage) {
+      this.getQuerys();
 	}
+
 	ionViewDidLoad(){
-   	 console.log('ionViewDidLoad QueryPage');
-    }
+	}
+	
 	getQuerys(){
-		return [{
-			id:"1",
-			name:"sdflsdjf",
-			type:"sdf",
-			brand:"sdfsdf",
-			num:"20",
-			time:"2017/7/20 21:05:43",
-		},{
-			id:"2",
-			name:"sdflsdjf",
-			type:"sdf",
-			brand:"sdfsdf",
-			num:"20",
-			time:"2017/7/20 21:05:43",
-		},{
-			id:"3",
-			name:"sdflsdjf",
-			type:"sdf",
-			brand:"sdfsdf",
-			num:"20",
-			time:"2017/7/20 21:05:43",
-		},{
-			id:"4",
-			name:"sdflsdjf",
-			type:"sdf",
-			brand:"sdfsdf",
-			num:"20",
-			time:"2017/7/20 21:05:43",
-		}];
+       this.storage.get("customer").then(customer => {
+	    this.customerService.getInqueriesByCustomerId(customer.id).subscribe(res=>{
+			this.querys = res.inqueries;
+	     	});
+	   })
 	}
 }

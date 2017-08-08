@@ -1,57 +1,52 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>发布求购</ion-title>
+    <ion-title>求购发布</ion-title>
   </ion-navbar>
 </ion-header>
-<ion-content padding>
-
- <form [formGroup]="inquery" (ngSubmit)="postInquery()">
-
-  <div class="list-tit">
-		求购标题
-	</div>
-	<div ion-item>
-		<ion-input class="buy-input"  formControlName="title" type="text"></ion-input>
-	</div>
-
-	<div class="list-tit">
-		产品类型
-	</div>
-	<div ion-item>
-		<ion-select formControlName="category_id" class="select-type">
-	    <ion-option *ngFor="let opt of categoryOptions"  value="{{opt.value}}">{{opt.label}}</ion-option>
-	    </ion-select>
-	 </div>
-
-	<div class="list-tit">
-		产品品牌
-	</div>
-	<div ion-item>
-		<ion-input class="buy-input"  formControlName="brand" type="text"></ion-input>
-	</div>
-
-	<div class="list-tit">
-		产品型号
-	</div>
-	<div ion-item>
-		<ion-input class="buy-input"  formControlName="sku" type="text"></ion-input>
-	</div>
-
-	<div class="list-tit">
-		数量
-	</div>
-	<div ion-item>
-		<ion-input class="buy-input"   formControlName="quantity"  type="text"></ion-input>
-	</div>
-
-  <div class="list-tit">
-		有效天数
-	</div>
-	<div ion-item>
-		<ion-input class="buy-input"   formControlName="valid_days"  type="text"></ion-input>
-	</div>
-
-	 <button ion-button type="submit" [disabled]="!inquery.valid" block  full>发布</button>
-	 
-	</form>
+<ion-content>
+ <ion-list no-lines>
+        <form [formGroup]="inquery" (ngSubmit)="postInquery()" >
+            <ion-item>
+                <ion-label floating>求购标题<span class="require">*</span></ion-label>
+                <ion-input formControlName="title" type="text" [class.invalid]="!inquery.controls.title.valid && (inquery.controls.title.dirty || submitAttempt)"></ion-input>
+            </ion-item>
+            <ion-item *ngIf="!inquery.controls.title.valid && (inquery.controls.title.dirty || submitAttempt)">
+               <p>求购标题不能为空！</p>
+            </ion-item>
+             <ion-item>
+                <ion-label stacked>产品类别</ion-label>
+                <ion-select  formControlName="category_id">
+                    <ion-option *ngFor="let opt of categoryOptions" value="{{opt.value}}">
+						{{opt.label}}
+					</ion-option>
+                </ion-select>
+            </ion-item>
+            <ion-item *ngIf="!inquery.controls.category_id.valid && (inquery.controls.category_id.dirty || submitAttempt)">
+               <p>请选择产品类别!</p>
+            </ion-item>
+            <ion-item>
+                <ion-label floating>产品型号</ion-label>
+                <ion-input formControlName="sku" type="text" [class.invalid]="!inquery.controls.sku.valid && (inquery.controls.sku.dirty || submitAttempt)"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label floating>产品品牌</ion-label>
+                <ion-input formControlName="brand" type="text" [class.invalid]="!inquery.controls.brand.valid && (inquery.controls.brand.dirty || submitAttempt)"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label floating>数量<span class="require">*</span></ion-label>
+                <ion-input formControlName="quantity" type="number" [class.invalid]="!inquery.controls.quantity.valid && (inquery.controls.quantity.dirty || submitAttempt)"></ion-input>
+            </ion-item>
+            <ion-item *ngIf="!inquery.controls.quantity.valid && (inquery.controls.quantity.dirty || submitAttempt)">
+                <p>请输入有效的数字！</p>
+			</ion-item>			
+			 <ion-item>
+                <ion-label floating>有效期(天)<span class="require">*</span></ion-label>
+                <ion-input formControlName="valid_days" type="number" [class.invalid]="!inquery.controls.valid_days.valid && (inquery.controls.valid_days.dirty || submitAttempt)"></ion-input>
+            </ion-item>
+            <ion-item *ngIf="!inquery.controls.valid_days.valid && (inquery.controls.valid_days.dirty || submitAttempt)">
+                <p>请输入有效的数字！</p>
+			</ion-item>
+		   <button ion-button type="submit" [disabled]="!inquery.valid" block  full>发布</button>
+        </form>
+ </ion-list>
 </ion-content>

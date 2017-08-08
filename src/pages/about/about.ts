@@ -26,14 +26,15 @@ export class AboutPage {
   }
 
   loadLoginStatus() {
-     this.storage.get("loginType").then(value => this.islogin=value);
      this.storage.get("customer").then(value => {
       if(value){
          this.customer = value;
+         this.islogin = true;
          this.name = this.customer.username;
          console.log(this.customer);
          console.log(this.islogin);
       } else {
+        this.islogin =false;
         console.log('no value');
       }
      });
