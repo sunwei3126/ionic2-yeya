@@ -6,22 +6,31 @@
 <ion-content >
 	<div *ngIf="goodsList && goodsList.length>0">
 	<ion-list>
-	  <ion-item-sliding *ngFor="let goods of goodsList" #slidingItem>
+	  <ion-item-sliding *ngFor="let good of goodsList" #slidingItem>
 		  <ion-item>
 		    <ion-avatar item-start>
-		      <img src="{{goods.imageUrl}}">
+			  	<img *ngIf="good.product.imageUrl && good.product.imageUrl.length > 0" [src]="good.product.imageUrl[0]">
+					<img *ngIf="!good.product.imageUrl || good.product.imageUrl.length == 0" src="assets/img/products/default-image.png">
 		    </ion-avatar>
-		    <h2>{{goods.imageUrl}}</h2>
-		    <h3>型号：{{goods.model}}</h3>
-		    <p class="overflow"><span class="fl">¥{{goods.price}}*{{goods.num}}</span><span class="fr">¥{{goods.total}}</span></p>
+		    <h2>{{good.product.name}}</h2>
+		    <h3>型号：{{good.product.sku}}</h3>
+				<p class="left">
+					价格：¥{{good.customer_entered_price}}
+				</p>
+				<P class="left">
+			  	数量：{{good.customer_entered_price*good.quantity}}
+				</P>
+				<P class="right">
+					小计：¥{{good.customer_entered_price*good.quantity}}
+				</P>
 		  </ion-item>
 		  <ion-item-options side="left">
-		    <button ion-button class="add" (click)="addCart(slidingItem,goods)"><ion-icon name="cart"></ion-icon> 加入购物车</button>
-		    <button ion-button class="remove" (click)="removeItem(goods.id)"><ion-icon name="trash"></ion-icon> 删除</button>
+		    <button ion-button class="add" (click)="addCart(slidingItem,good)"><ion-icon name="cart"></ion-icon> 加入购物车</button>
+		    <button ion-button class="remove" (click)="removeItem(slidingItem, good.id)"><ion-icon name="trash"></ion-icon> 删除</button>
 		  </ion-item-options>
 		  <ion-item-options side="right">
-		    <button ion-button class="remove" (click)="removeItem(goods.id)"><ion-icon name="trash"></ion-icon> 删除</button>
-		    <button ion-button class="add" (click)="addCart(slidingItem,goods)"><ion-icon name="cart"></ion-icon> 加入购物车</button>
+		    <button ion-button class="remove" (click)="removeItem(slidingItem, good.id)"><ion-icon name="trash"></ion-icon> 删除</button>
+		    <button ion-button class="add" (click)="addCart(slidingItem, good)"><ion-icon name="cart"></ion-icon> 加入购物车</button>
 		  </ion-item-options>
 	  </ion-item-sliding>
 	</ion-list>

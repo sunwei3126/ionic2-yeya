@@ -31,7 +31,7 @@ export class CatalogPage {
   }
    
   gotoSearchListPage(){
-  	this.navCtrl.push("SearchListPage");
+    this.navCtrl.push("SearchListPage")
   }
   
   showSubCategories(item: any) {

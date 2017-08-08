@@ -1,7 +1,7 @@
 import { CatalogService } from './../../providers/catalog/catalog-service';
 import { Component } from '@angular/core';
 import { NavController, IonicPage ,NavParams,App, MenuController} from 'ionic-angular';
-//import { SlistPage } from '../slist/slist';
+import { SlistPage } from '../slist/slist';
 import { Storage } from '@ionic/storage';
 
 @IonicPage()
@@ -16,7 +16,7 @@ export class SearchPage {
   	flow:0,//流量
   	pressureRange:0,//压力范围
   }
- // rootPage: any = SlistPage;
+  rootPage: any = SlistPage;
   category:any;
   senior:boolean=true;
   constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage,public app: App, public menu: MenuController) {

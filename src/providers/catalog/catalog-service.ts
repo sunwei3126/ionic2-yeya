@@ -22,7 +22,7 @@ export class CatalogService {
   }
 
   getProductsByFilters(filterSpecification:any): Observable<any> {
-  filterSpecification.fields="id, name, short_description, full_description, price, sku, stock_quantity, images, specs, totalPages, totalCount";
+  filterSpecification.fields="id, name, short_description, full_description, price, sku, stock_quantity, images, specs, totalPages, vendor_name, totalCount";
     return this.http.post(this.productsByCategoryURI, filterSpecification).map(response=>response.json());
   }
 

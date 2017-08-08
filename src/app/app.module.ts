@@ -10,12 +10,12 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { CatalogService } from '../providers/catalog/catalog-service';
 import { BrandsService } from '../providers/brands/brands-service';
 import { CompanyService } from '../providers/company/company-service';
-//import { SlistPage } from '../pages/slist/slist';
+import { SlistPage } from '../pages/slist/slist';
 
 @NgModule({
   declarations: [
     MyApp,
-    //SlistPage
+    SlistPage
   ],
   imports: [
     BrowserModule,
@@ -28,7 +28,7 @@ import { CompanyService } from '../providers/company/company-service';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-   //SlistPage
+    SlistPage
   ],
   providers: [
     StatusBar,

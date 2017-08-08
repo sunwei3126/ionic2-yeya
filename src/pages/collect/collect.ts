@@ -11,7 +11,6 @@ import { NavController, IonicPage,AlertController,ItemSliding } from 'ionic-angu
 export class CollectPage {
 	goodsList:Array<any>=[];
   constructor(public navCtrl: NavController,public alertCtrl: AlertController, public customerService:CustomerService, public storage:Storage) {
-    	 
 	}
 
 	ionViewDidLoad(){
@@ -23,13 +22,13 @@ export class CollectPage {
       this.storage.get("customer").then(customer => {
 	    this.customerService.getShoppingCartByCustomerId(customer.id).subscribe(res=>{
 				 this.goodsList = res.shopping_carts;
-					console.log('display goodslist');
-					console.log(this.goodsList);
+				 this.goodsList = this.goodsList.filter(cart => cart.shopping_cart_type==="Wishlist");
 	     	});
 	   })
 	}
+
 	//从收藏夹移除
-	removeItem(id){
+	removeItem(slidingItem: ItemSliding, id:number){
 		let prompt = this.alertCtrl.create({
 	      title: '提示',
 	      message: "确定将此商品从收藏夹中删除?",
@@ -37,27 +36,24 @@ export class CollectPage {
 	        {
 	          text: '取消',
 	          handler: data => {
-	            console.log('Cancel clicked');
+							slidingItem.close();			
 	          }
 	        },
 	        {
 	          text: '确认',
-	          handler: data => {
-	          		//商品删除的代码
-					for(let i = 0; i < this.goodsList.length; i++) {
-				      if(this.goodsList[i].id == id){
-				        this.goodsList.splice(i, 1);
-				      }
-			    		}
-					//end
-	          }
+						handler: data => {
+							this.customerService.deleteShoppingCartItemById(id).subscribe(res=>{
+								this.getGoodsList();
+								slidingItem.close();
+							})
+						}					
 	        }
 	      ]
 	    });
 	    prompt.present();
 	}
 	//加入购物车
-	addCart(slidingItem: ItemSliding,goods){
+	addCart(slidingItem: ItemSliding,good: string):void{
 		let prompt = this.alertCtrl.create({
 	      title: '提示',
 	      message: "确定将此商品加入购物车?",
@@ -65,15 +61,14 @@ export class CollectPage {
 	        {
 	          text: '取消',
 	          handler: data => {
-	            console.log('Cancel clicked');
+						  slidingItem.close();					
 	          }
 	        },
 	        {
 	          text: '确定',
 	          handler: data => {
 	          		//商品加入购物车代码
-	          		this.addCartGoods(slidingItem,goods);
-					//end
+								this.addCartGoods(slidingItem,good);
 	          }
 	        }
 	      ]
@@ -81,9 +76,9 @@ export class CollectPage {
 	    prompt.present();
 	}
 	//提示
-	addCartGoods(slidingItem,goods){
-		let id = goods.id;//商品id
-		let num = goods.num;//商品数量
+	addCartGoods(slidingItem:ItemSliding,good:any):void {
+		let id = good.id;//商品id
+		let num = good.num;//商品数量
 		let alert = this.alertCtrl.create({ 
 	        title: '提示!', 
 	        subTitle: '商品加入购物车成功', 
@@ -92,7 +87,7 @@ export class CollectPage {
 	          handler: data => {
           		//左滑缩回
           		slidingItem.close();
-				//end
+				     //end
 	          }
 	        }] 
 	    }); 

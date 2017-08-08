@@ -1,32 +1,33 @@
+import { CustomerService } from './../../providers/customer/customer-service';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams,ToastController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
-
-/**
- * Generated class for the ProductDetailsPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
+import 'rxjs/add/operator/catch';
 @IonicPage()
 @Component({
   selector: 'page-product-details',
   templateUrl: 'product-details.html',
 })
 export class ProductDetailsPage {
-   count:number=0;
+   count:number = 1;
    product:any;
-   quantity:number=0;
+   quantity:number = 0;
    loginType:any;
-   commentList:any;//评论
-  constructor(public navCtrl: NavController, public navParams: NavParams,public storage: Storage,private toastCtrl: ToastController) {
+	 commentList:any;//评论
+	 
+	constructor(public navCtrl: NavController, 
+							public navParams: NavParams, 
+							public customerService:CustomerService,
+							public storage: Storage, 
+							private toastCtrl: ToastController) {
    this.product = navParams.get("product");
    this.commentList = this.getCommentList();
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ProductDetailsPage');
-  }
+	}
+	
   //评论
   getCommentList(){
   	return [{
@@ -52,53 +53,82 @@ export class ProductDetailsPage {
    //添加收藏
    addToFavourite(product:any) {
    	//判断是否登录
-     this.storage.get('loginType').then((val) => {
-          this.loginType = val;//登录状态
-			if(this.loginType!=true){//如果没有登录 跳转到登录页面
-				this.navCtrl.push( 'LoginPage' );
-			}else{//已经登录
-				//异步set 将此商品保存到数据库
-				
-				
-				//保存成功以后  先提示"添加收藏成功"  进入我的收藏页面
-				let toast = this.toastCtrl.create({
-				    message: '添加收藏成功',
-				    duration: 1000,
-				    position: 'bottom'
-				  });
-				  toast.onDidDismiss(() => {
-					this.navCtrl.push( 'CollectPage' );//提示消失后进入我的收藏页面
-				  });
-				  toast.present();
-			}
-     })
-   }
-
-  countOperator(operater:number) {
-    this.count += operater;
-  }
-  //添加购物车
-  addToCarts(product:any, count:number) {
-	//判断是否登录
-     this.storage.get('loginType').then((val) => {
-          this.loginType = val;//登录状态
-			if(this.loginType!=true){//如果没有登录 跳转到登录页面
+     this.storage.get('customer').then((customer) => {
+			if(!customer){//如果没有登录 跳转到登录页面
+			  this.loginType=false;
 				this.navCtrl.push( 'LoginPage' );
 			}else{
-  				//异步set 将此商品保存到数据库
-				
-				
-				//保存成功以后  提示"添加购物车成功"
+        this.loginType=true;
+				this.customerService.AddShoppingCartItem(customer.id, product.id,this.count,this.product.price,"Wishlist").subscribe(res=>{	
+					if(res.errors) {
+					var errorMsg = this.formateErrorMessage(res.errors);
+					this.showResult(errorMsg, 5000, null);
+				 } else {
+					 this.showResult('添加收藏成功',1000, "CollectPage")
+				 }
+				}
+			), error=>{
+				console.log("hell" + error);
+			}
+  	 }
+	 })	 
+		
+	}
+
+	showResult(message:string, duration:number, page:string):void {
 				let toast = this.toastCtrl.create({
-				    message: '添加购物车成功',
-				    duration: 1000,
+				    message: message,
+				    duration: duration,
 				    position: 'bottom'
 				  });
 				  toast.onDidDismiss(() => {
-					//提示消失后执行方法
+						if(page) {
+						  this.navCtrl.push(page);
+						}
 				  });
-				  toast.present();
+				toast.present();
+  	}
+
+	formateErrorMessage(errors:any):string {
+		var errorList:Array<string>=[];
+				 if(errors) {
+					  for (var key in errors) {
+							if (errors.hasOwnProperty(key)) {
+								var values = errors[key];
+                 errorList.push(...values)
+							}
+						}
+				 }
+
+	  	return	errorList.join('\r\n')
+	}
+
+  countOperator(operater:number) {
+		this.count += operater;
+		if(this.count < 1)
+			this.count = 1;
+
+		if(this.count > this.product.stock_quantity)
+				this.count = this.product.stock_quantity;
+	}
+	
+  //添加购物车
+  addToCarts(product:any, count:number) {
+     this.storage.get('customer').then((customer) => {
+			if(!customer){//如果没有登录 跳转到登录页面
+			  this.loginType=false;
+				this.navCtrl.push( 'LoginPage' );
+			}else{
+        this.loginType=true;
+				this.customerService.AddShoppingCartItem(customer.id, product.id,this.count,this.product.price,"ShoppingCart").subscribe(res=>{	
+		     if(res.errors) {
+					var errorMsg = this.formateErrorMessage(res.errors);
+					this.showResult(errorMsg, 5000,null);
+				 } else {
+					 this.showResult('添加购物车成功',1000,"CartPage");
+				 }
+				});
 			}
-     })
+	  })
   }
 }
