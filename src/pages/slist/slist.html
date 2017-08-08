@@ -1,0 +1,82 @@
+<ion-header>
+    <ion-navbar>
+        <ion-searchbar [showCancelButton]="true" placeholder="{{name}}"></ion-searchbar>
+	     <ion-buttons end>
+	      <button ion-button large menuToggle>
+	     	筛选
+	      </button>
+	    </ion-buttons> 
+    </ion-navbar>
+    <ion-grid class="search-type">
+	  <ion-row>
+	    <ion-col col-4>
+	    		<button ion-button clear full id="name" (click)="nameFun(this)"> 名称
+	    			<span class="span-icon">
+	    				<ion-icon name="ios-arrow-up" class="up"></ion-icon><br/>
+	    				<ion-icon name="ios-arrow-down" class="down"></ion-icon>
+	    			</span>
+	    		</button>
+	    </ion-col>
+	    <ion-col col-4>
+	    		<button ion-button clear full id="price" (click)="priceFun(this)">价格
+	    			<span class="span-icon">
+	    				<ion-icon name="ios-arrow-up" class="up"></ion-icon><br/>
+	    				<ion-icon name="ios-arrow-down" class="down"></ion-icon>
+	    			</span>
+	    		</button>
+	    </ion-col>
+	    <ion-col col-4>
+	    		<button ion-button clear full id="stock" (click)="stockFun(this)"> 库存
+	    			<span class="span-icon">
+	    				<ion-icon name="ios-arrow-up" class="up"></ion-icon><br/>
+	    				<ion-icon name="ios-arrow-down" class="down"></ion-icon>
+	    			</span>
+	    		</button>
+	    </ion-col>
+	  </ion-row>
+	</ion-grid>
+</ion-header>
+<ion-content>
+	<div class="row img-center" *ngIf="!products">
+		<img height="35" src="assets/img/ring.svg">
+	</div>
+	
+	<!--下拉刷新-->
+ 	<ion-refresher (ionRefresh)="doRefresh($event)">
+      <ion-refresher-content
+        pullingIcon="arrow-dropdown"
+        pullingText="获取最新数据..."
+        refreshingSpinner="circles"
+        refreshingText="获取最新数据..">
+      </ion-refresher-content>
+    </ion-refresher>
+    <!--列表-->
+  <div  *ngIf="products">
+  <ion-list class="search-list">
+    <ion-item *ngFor="let product of products" (click)="gotoProductDetails(product)">
+      <ion-thumbnail item-start>
+					<img *ngIf="product.images && product.images.length > 0" [src]="product.images[0].src">
+					<img *ngIf="!product.images || product.images.length == 0" src="assets/img/products/default-image.png">
+      </ion-thumbnail>
+			<h2 class="name">{{product.name}}</h2>
+			<p>型号: {{product.sku}}</p> 
+			<p>库存: {{product.stock_quantity}}</p>
+			<p>价格：{{product.price}}&nbsp;</p>
+    </ion-item>
+  </ion-list>
+  </div>
+  <div  *ngIf="products && products.length == 0" padding>
+  	<p class="tj">抱歉没有符合条件的商品</p>
+    <div class="probtn">
+        <button ion-button color="secondary" (click)="gotoWantBuyPage();" block>发布求购</button>
+    </div>
+  </div>
+	<!--上拉加载-->
+	<ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+      <ion-infinite-scroll-content
+        loadingSpinner="bubbles"
+        loadingText="加载更多产品...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+    <!--end-->
+</ion-content>
