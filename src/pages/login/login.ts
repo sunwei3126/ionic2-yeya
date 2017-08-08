@@ -20,6 +20,7 @@ export class LoginPage {
   }
 
   ionViewDidLoad() {
+
   }
 
   login() {
@@ -28,13 +29,15 @@ export class LoginPage {
         this.loading.dismiss();
         if(res.customer) {
             this.storage.set('loginType', true);//登录状态
-            this.storage.set('customer', res.customer)
-            this.navCtrl.pop(); //返回上一页
+            this.storage.set('customer', res.customer).then(val=>{
+              this.events.publish("user:login", this.name);
+              this.navCtrl.pop(); //返回上一页
+            })
         } else {
             this.storage.set('loginType', false);
+            this.storage.remove('customer');
             this.presentAlert(res.login_result)
         }
-        this.events.publish("user:login", this.name);
       }
     )
   }

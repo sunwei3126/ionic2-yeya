@@ -14,16 +14,18 @@ export class AboutPage {
   islogin:Boolean=false;
   customer:any;
   cartNum:number=2;//购物车数量
+  
   constructor(public navCtrl: NavController,
      public events: Events,
      public storage: Storage) {
-     this.loadLoginStatus();
+     this.loadLoginStatus(); 
+     this.events.subscribe('user:login', (name) => {
+       this.loadLoginStatus();
+     });
   }
 
   ionViewDidLoad(){    
-  this.events.subscribe('user:login', (name) => {
-   this.loadLoginStatus();
-  });
+
   }
 
   loadLoginStatus() {
@@ -32,13 +34,14 @@ export class AboutPage {
          this.customer = value;
          this.islogin = true;
          this.name = this.customer.username;
-     	 this.storage.set('loginType', true);
+     	   this.storage.set('loginType', true);
          console.log(this.customer);
          console.log(this.islogin);
       } else {
         this.islogin =false;
     		this.storage.set('loginType', false);
         console.log('no value');
+        this.name = "未登录";
       }
      });
   }
@@ -66,18 +69,23 @@ export class AboutPage {
   gotoChangePassPage(){
   	this.checkLogin('ChangePassPage',null);
   }
+
   gotologin(){
-    if(!this.islogin) {
-      this.navCtrl.push( 'LoginPage' );
-    }
+     this.navCtrl.push( 'LoginPage' );
   }
+
+  logout() {
+    this.storage.remove("loginType");
+    this.storage.remove("customer");
+    this.loadLoginStatus();
+  }
+
   //判断是否登录
   checkLogin(page,sub) {
-     //this.navCtrl.push( 'ChangePassPage' );
      this.storage.get('loginType').then((val) => {
           this.loginType = val;//登录状态
 			if(this.loginType!=true){
-				this.navCtrl.push( 'LoginPage' );
+				this.navCtrl.push('LoginPage' );
 			}else{
 				if(page!=null){
   					this.navCtrl.push(page,sub);
