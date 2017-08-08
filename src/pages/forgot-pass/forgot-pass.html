@@ -5,18 +5,13 @@
 </ion-header>
 <ion-content padding>
     <img class="dv_logo" src="https://avatars2.githubusercontent.com/u/11835988?v=3&u=2a181779eb2164666606366a1df31f9c17cf7a20&s=100" />
+    <div padding>
+    		请在下面输入您的电子邮箱地址，我们将发送重置密码链接到您的邮箱地址
+    </div>
     <ion-list>
         <ion-item>
-            <ion-label floating>账号：</ion-label>
-            <ion-input type="text" [(ngModel)]="name"></ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-label floating>校验码：</ion-label>
-            <ion-input type="text" [(ngModel)]="code"></ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-label floating>密码：</ion-label>
-            <ion-input type="password" [(ngModel)]="pass"></ion-input>
+            <ion-label floating>您的电子邮箱地址：</ion-label>
+            <ion-input type="text" [(ngModel)]="email"></ion-input>
         </ion-item>
     </ion-list>
     <div padding>

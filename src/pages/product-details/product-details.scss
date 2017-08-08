@@ -26,5 +26,17 @@ page-product-details {
 td {
     vertical-align: middle;
 }
-
+ion-label{
+        text-overflow: initial;
+    white-space: inherit
+}
+.pl .item-ios ion-avatar ion-img, .pl .item-ios ion-avatar img{ width: 50px;height: 50px;}
+.pl .item-ios h2{ line-height: 2.4rem;}
+.pl .tit{ padding-bottom: 10px; font-size: 1.6rem;}
+.pl .content{ width: 100%; padding: 10px; border: 1px solid #c8c7cc;}
+.self-pl{ margin-bottom: 20px;}
+.pl .pf{ margin-top: 6px; font-size: 1.6rem;}
+.pl .pf input{ vertical-align: middle; margin-right: 10px; width: 16px; height: 16px;}
+.pl .btn{ margin-top: 10px;}
+.pl-list h3 img{height: 16px; margin-right: 4px;}
 }

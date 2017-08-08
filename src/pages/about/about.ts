@@ -13,6 +13,7 @@ export class AboutPage {
   loginType:any;
   islogin:Boolean=false;
   customer:any;
+  cartNum:number=2;//购物车数量
   constructor(public navCtrl: NavController,
      public events: Events,
      public storage: Storage) {
@@ -31,10 +32,12 @@ export class AboutPage {
          this.customer = value;
          this.islogin = true;
          this.name = this.customer.username;
+     	 this.storage.set('loginType', true);
          console.log(this.customer);
          console.log(this.islogin);
       } else {
         this.islogin =false;
+    		this.storage.set('loginType', false);
         console.log('no value');
       }
      });
@@ -63,7 +66,6 @@ export class AboutPage {
   gotoChangePassPage(){
   	this.checkLogin('ChangePassPage',null);
   }
-
   gotologin(){
     if(!this.islogin) {
       this.navCtrl.push( 'LoginPage' );

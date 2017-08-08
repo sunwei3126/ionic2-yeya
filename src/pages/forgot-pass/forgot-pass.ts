@@ -13,9 +13,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'forgot-pass.html',
 })
 export class ForgotPassPage {
-  name:string;
-  pass:string;
-  code:string;
+  email:string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
@@ -24,6 +22,6 @@ export class ForgotPassPage {
   }
 
   change() {
-	 this.navCtrl.push("LoginPage");
+	 //this.navCtrl.push("LoginPage");
   }
 }

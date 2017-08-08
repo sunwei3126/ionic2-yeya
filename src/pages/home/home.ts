@@ -12,11 +12,12 @@ export class HomePage {
   products: Array<any>;
   tabanimate:Boolean=false;
   old_scrollTop = 0;
-
   constructor(public navCtrl: NavController, public ref: ChangeDetectorRef, public catalogService:CatalogService, public storage:Storage) {
     this.catalogService.getPopularProducts(10).subscribe(res=>this.products = res.products);
   }
-
+  gotoSearchListPage(){
+  	this.navCtrl.push("SearchListPage");
+  }
   gotoCompanyShow() {
     this.navCtrl.push("CompanysAllPage");
   }
@@ -24,7 +25,15 @@ export class HomePage {
   gotoBrandShow() {
     this.navCtrl.push("BrandsAllPage");
   }
-
+  gotoCartShow(){
+  	  this.storage.get('loginType').then(val => {
+		if(val != true){
+			this.navCtrl.push( 'LoginPage' );
+		}else{
+	    		this.navCtrl.push("CartPage");
+		}
+    });
+  }
   gotoWantBuyShow(){
      this.storage.get('loginType').then(val => {
 			if(val != true){

@@ -1,8 +1,9 @@
 <ion-header [class.headanimate]="tabanimate">
   <ion-navbar no-border-bottom>
-    <ion-searchbar [showCancelButton]="true" placeholder="搜索" ></ion-searchbar>
+    <ion-searchbar [showCancelButton]="true" (tap)="gotoSearchListPage()" placeholder="搜索" ></ion-searchbar>
      <ion-buttons end>
-      <button ion-button large>
+      <button ion-button large (click)="gotoCartShow()" class="home-cart">
+      	<!--<ion-badge color="danger">2</ion-badge> 图标太小加上数量太丑   在我的页面加上购物车数量了-->
         <ion-icon ios="ios-cart" md="md-cart"></ion-icon>
       </button>
     </ion-buttons>

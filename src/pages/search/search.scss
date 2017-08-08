@@ -16,4 +16,9 @@ page-search {
    .img-center {
 		margin-left: 46%;
 	}
+	.input-c{ border: 1px solid #DEDEDE;}
+	.input-c .text-input-ios,.input-c .text-input-md,.input-c .text-input-wp{ margin: 4px 2px; width: calc(100% - 2px - 2px);}
+	.input-to,.input-to .text-input[disabled]{ text-align: center;}
+	.input-to{ -webkit-flex: 0; -ms-flex: 0; flex: 0;}
+	.input-to .text-input-ios,.input-to .text-input-md,.input-to .text-input-wp{ width: 10px; margin: 11px 2px;}
 }

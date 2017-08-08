@@ -55,7 +55,33 @@
                 </ion-col>
             </ion-row>
         </ion-grid>
-
-        <button ion-button block (click)="addToCarts(product,count)"><ion-icon name="cart" ></ion-icon>加入购物车</button>
     </ion-card>
+    <div padding class="pl">
+    		<div class="self-pl">
+	    		<div class="tit">写下您的评论</div>
+	    		<textarea class="content" rows="4"></textarea>
+	    		<div class="pf">评分：很一般
+	    			<input type="radio" name="pl" value="1" />
+	    			<input type="radio" name="pl" value="2" />
+	    			<input type="radio" name="pl" value="3" />
+	    			<input type="radio" name="pl" value="4" />
+	    			<input type="radio" name="pl" value="5" />非常好
+	    		</div>
+	    		<div class="btn"><button ion-button color="secondary">提交评论</button></div>
+    		</div>
+    		<div class="tit">历史评论</div>
+    		<ion-list class="pl-list">
+		  <ion-item *ngFor="let comments of commentList">
+		    <ion-avatar item-start>
+		      <img src="{{comments.img}}">
+		    </ion-avatar>
+		    <h2>{{comments.name}}</h2>
+		    <h3><img src="{{comments.start}}" /> {{comments.data}}</h3>
+		    <p>{{comments.content}}</p>
+		  </ion-item>
+		</ion-list>
+    </div>
 </ion-content>
+<ion-footer	align="center" no-border>
+    <button ion-button block (click)="addToCarts(product,count)"><ion-icon name="cart" ></ion-icon>加入购物车</button>
+</ion-footer>

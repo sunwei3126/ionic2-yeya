@@ -30,6 +30,10 @@ export class CatalogPage {
       })
   }
    
+  gotoSearchListPage(){
+  	this.navCtrl.push("SearchListPage");
+  }
+  
   showSubCategories(item: any) {
     this.topCategories.forEach(item =>item.isSelect=false);
     item.isSelect=true;

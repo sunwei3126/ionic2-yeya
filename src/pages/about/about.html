@@ -4,13 +4,14 @@
     </ion-navbar>
 </ion-header>
 <ion-content>
-    <div class="about" padding>
+    <div class="about" padding (click)="checkLogin()">
         <div class="img"><img [src]="base64Image"  /></div>
         <h5>{{name}}</h5>
     </div>
     <ion-grid padding class="classification">
 	  <ion-row>
-	    <ion-col col-3 (click)="myCartPage();">
+	    <ion-col col-3 (click)="myCartPage();" class="about-cart">
+	    		<ion-badge color="danger" *ngIf="cartNum>0">{{cartNum}}</ion-badge>
 	    		<div><ion-icon name='cart' color="danger"></ion-icon></div>
 	    		<p>购物车</p>
 	    </ion-col>
