@@ -7,15 +7,34 @@
     <img class="dv_logo" src="https://avatars2.githubusercontent.com/u/11835988?v=3&u=2a181779eb2164666606366a1df31f9c17cf7a20&s=100" />
     <ion-list>
         <ion-item>
-            <ion-label floating>账号：</ion-label>
+            <ion-label floating><span class="red">*</span> 手机号码：</ion-label>
+            <ion-input type="text" [(ngModel)]="phone"></ion-input>
+            <button ion-button outline item-end>
+		      发送手机验证码
+		    </button>
+        </ion-item>
+        <ion-item>
+            <ion-label floating><span class="red">*</span> 验证码：</ion-label>
+            <ion-input type="text" [(ngModel)]="code"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label floating><span class="red">*</span> 姓名：</ion-label>
             <ion-input type="text" [(ngModel)]="name"></ion-input>
         </ion-item>
         <ion-item>
-            <ion-label floating>密码：</ion-label>
+            <ion-label floating><span class="red">*</span> 电子邮箱：</ion-label>
+            <ion-input type="text" [(ngModel)]="email"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label floating>&nbsp;&nbsp;公司：</ion-label>
+            <ion-input type="text" [(ngModel)]="company"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label floating><span class="red">*</span> 密码：</ion-label>
             <ion-input type="password" [(ngModel)]="pass"></ion-input>
         </ion-item>
         <ion-item>
-            <ion-label floating>确认密码：</ion-label>
+            <ion-label floating><span class="red">*</span> 确认密码：</ion-label>
             <ion-input type="password" [(ngModel)]="rePass"></ion-input>
         </ion-item>
     </ion-list>

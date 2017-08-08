@@ -1,8 +1,7 @@
-import { SafeResourceUrl } from '@angular/platform-browser';
-import { CatalogService } from './../../providers/catalog/catalog-service';
-import { Observable } from 'rxjs/Observable';
 import { Component } from '@angular/core';
-import { NavController, IonicPage ,NavParams} from 'ionic-angular';
+import { NavController, IonicPage ,NavParams,App, MenuController} from 'ionic-angular';
+import { SlistPage } from '../slist/slist';
+import { Storage } from '@ionic/storage';
 
 @IonicPage()
 @Component({
@@ -10,125 +9,66 @@ import { NavController, IonicPage ,NavParams} from 'ionic-angular';
   templateUrl: 'search.html'
 })
 export class SearchPage {
-  category:any;
-	products: Array<any>;
-	currentPage:number = 1;
-	pageSize:number = 20;
-	totalPages:number = 0;
-
   item:any={
-  	name:0,//名称
+  	brad:0,//品牌
   	price:0,//价格
-  	stock:0,//库存
-	}
-	
-  constructor(public navCtrl: NavController, public navParams: NavParams, public catalogService:CatalogService) {
-		this.category = navParams.get("item");
-	  this.getProducts(this.currentPage);
-	}
-	
-  ionViewDidLoad() {
- }
-	
- getProducts(page:number){
-	
-		let specfilter = {
-		  	category_id: this.category.id,
-		   	page: page,
-		  	pageSize:this.pageSize,
-        sorts: []
-	 	 }
-
-			if(this.item.name == 1)  
-				 specfilter.sorts.push({"field": "name", "dir":"asc"})
-
-  	  if(this.item.name == 2)  
-				 specfilter.sorts.push({"field": "name", "dir":"desc"})
-
-			if(this.item.price == 1)  
-				 specfilter.sorts.push({"field": "price", "dir":"asc"})
-
-  	  if(this.item.price == 2)  
-				 specfilter.sorts.push({"field": "price", "dir":"desc"})
-
-			if(this.item.stock == 1)  
-				 specfilter.sorts.push({"field": "stockQuantity", "dir":"asc"})
-
-  	  if(this.item.stock == 2)  
-				 specfilter.sorts.push({"field": "stockQuantity", "dir":"desc"})
-
-     return new Promise(resolve => {
-    	this.catalogService.getProductsByFilters(specfilter).subscribe(res => {
-				if(!this.products)
-					this.products=[];
-
-				this.products=this.products.concat(res.products);
-				this.totalPages = res.totalPages
-				console.log(res);
-				console.log("共有" + this.totalPages + "页")
-				resolve();
-			})});
- }
-  //下拉刷新
-  doRefresh(refresher) {
-			this.currentPage = 1;
-			this.products=null;
-	    this.getProducts(this.currentPage).then(()=>refresher.complete());
+  	flow:0,//流量
+  	pressureRange:0,//压力范围
   }
-  //上拉加载
-  doInfinite(refresher) {
-		this.currentPage++;
-		if(this.currentPage > this.totalPages) {
-			refresher.complete();
-		} else {
-		 this.getProducts(this.currentPage).then(()=>refresher.complete());
-		}
-	}
-	
+  rootPage: any = SlistPage;
+  category:any;
+  senior:boolean=true;
+  constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage,public app: App, public menu: MenuController) {
+  	this.category = navParams.get("item");
+  	this.storage.set('category', this.category);//搜索的类别
+  	menu.enable(true);
+  }
+  ionViewDidLoad() {
+  }
+ getProducts(){
+ }
   gotoProductDetails(product:any){
     this.navCtrl.push("ProductDetailsPage", {product:product});
-	}
-	
-  //名称
-  nameFun(e){
-  	this.clear("name");
-  	if(this.item.name==1){
-  		this.item.name=2;//由高到低
+  }
+  //点击品牌
+  bradFun(e){
+  	this.clear("brad");
+  	if(this.item.brad==1){
+  		this.item.brad=2;//由高到低
   	}else{
-  		this.item.name=1;//由低到高
+  		this.item.brad=1;//由低到高
   	}
-		this.check("name",this.item.name);
-		this.currentPage = 1;
-		this.products = null;
-		this.getProducts(1);
-	}
-	
+  	this.check("brad",this.item.brad);
+  }
   //价格
   priceFun(e){
   	this.clear("price");
-  	if(this.item.price == 1){
-  		this.item.price = 2;//由高到低
+  	if(this.item.price==1){
+  		this.item.price=2;//由高到低
   	}else{
-  		this.item.price = 1;//由低到高
+  		this.item.price=1;//由低到高
   	}
-		this.check("price",this.item.price);
-		this.currentPage = 1;
-		this.products = null;
-		this.getProducts(1);
+  	this.check("price",this.item.price);
   }
-
-  //库存
-   stockFun(e){
-  	this.clear("stock");
-  	if(this.item.stock==1){
-  		this.item.stock=2;//由高到低
+  //流量
+  flowFun(e){
+  	this.clear("flow");
+  	if(this.item.flow==1){
+  		this.item.flow=2;//由高到低
   	}else{
-  		this.item.stock=1;//由低到高
+  		this.item.flow=1;//由低到高
   	}
-		this.check("stock",this.item.stock);
-		this.currentPage = 1;
-		this.products = null;
-		this.getProducts(1);
+  	this.check("flow",this.item.flow);
+  }
+  //压力范围
+  pressureRangeFun(e){
+  	this.clear("pressureRange");
+  	if(this.item.pressureRange==1){
+  		this.item.pressureRange=2;//由高到低
+  	}else{
+  		this.item.pressureRange=1;//由低到高
+  	}
+  	this.check("pressureRange",this.item.pressureRange);
   }
   //check
   check(name,num){
@@ -140,21 +80,20 @@ export class SearchPage {
   	}else{
   		this.addClass(down,"red");
   		this.removeClass(up,"red");
-		}
+  	}
   }
   //clear
   clear(name){
 	for(let i in this.item){
-		if(i != name){
+		if(i!=name){
 		  	this.item[i] = 0;
 		  	let btn = document.getElementById(i).getElementsByTagName("ion-icon");
 		  	for(let j = 0;j<btn.length;j++){
 		  		this.removeClass(btn[j],"red");
 		  	}
-	  	}
-	 }
+		}
 	}
-	
+  }
   //search
   search(){
   	this.clear("");
@@ -166,7 +105,6 @@ export class SearchPage {
 	let added = obj_class + blank + cls;//组合原来的 class 和需要添加的 class.
 	    obj.className = added;//替换原来的 class.
 	}
-
   removeClass(obj, cls){
   	let obj_class = ' '+obj.className+' ';//获取 class 内容, 并在首尾各加一个空格. ex) 'abc    bcd' -> ' abc    bcd '
 	    obj_class = obj_class.replace(/(\s+)/gi, ' ');//将多余的空字符替换成一个空格. ex) ' abc    bcd ' -> ' abc bcd '
@@ -174,7 +112,6 @@ export class SearchPage {
 	    removed = removed.replace(/(^\s+)|(\s+$)/g, '');//去掉首尾空格. ex) 'bcd ' -> 'bcd'
 	    obj.className = removed;//替换原来的 class.
 	}
-
   hasClass(obj, cls){
 	 let obj_class = obj.className;//获取 class 内容.
 	 let obj_class_lst = obj_class.split(/\s+/);//通过split空字符将cls转换成数组.
@@ -185,11 +122,9 @@ export class SearchPage {
          }
      }
      return false;
-		}
-		
+    }
   //发布求购
   gotoWantBuyPage(){
   	this.navCtrl.push("WantBuyPage");
-	}
-	
+  }
 }

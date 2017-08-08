@@ -44,4 +44,6 @@ page-about {
     .classification{ margin-top: 20px; background-color: #FFFFFF; text-align: center;}
     .classification div{ font-size: 26px;}
     .about-list{ margin-top: 20px;}
+    .about-cart{ position: relative;}
+    .about-cart .badge{ position: absolute; top: 0; right: 6%;}
 }

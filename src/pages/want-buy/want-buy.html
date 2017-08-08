@@ -18,7 +18,7 @@
 		产品类型
 	</div>
 	<div ion-item>
-		<ion-select formControlName="category_id" class="select-type">
+		<ion-select formControlName="category_id" class="select-type" cancelText="取消" okText="确定">
 	    <ion-option *ngFor="let opt of categoryOptions"  value="{{opt.value}}">{{opt.label}}</ion-option>
 	    </ion-select>
 	 </div>
