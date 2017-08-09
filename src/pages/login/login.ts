@@ -25,7 +25,7 @@ export class LoginPage {
 
   login() {
     this.presentLoading();
-    this.customerService.Login(this.name,this.pass).subscribe(res=>{
+    this.customerService.Login(this.name.trim(),this.pass.trim()).subscribe(res=>{
         this.loading.dismiss();
         if(res.customer) {
             this.storage.set('loginType', true);//登录状态

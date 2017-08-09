@@ -9,8 +9,8 @@
         <ion-item>
             <ion-label floating><span class="red">*</span> 手机号码：</ion-label>
             <ion-input type="text" [(ngModel)]="phone"></ion-input>
-            <button ion-button outline item-end>
-		      发送手机验证码
+            <button  [disabled]="!canSend"  ion-button outline item-end (click)="sendMsg()" >
+		      {{sendTitle}}
 		    </button>
         </ion-item>
         <ion-item>

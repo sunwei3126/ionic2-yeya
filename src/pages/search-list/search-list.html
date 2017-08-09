@@ -1,27 +1,14 @@
 <ion-header>
     <ion-navbar>
-        <ion-searchbar [showCancelButton]="true" (ionInput)="getItems($event)" placeholder="搜索"></ion-searchbar>
-	     <!--<ion-buttons end>
-	      <button ion-button large (click)="search()">
-	     	筛选
-	      </button>
-	    </ion-buttons>-->
+        <ion-searchbar [showCancelButton]="true" (keyup)="searchTerm$.next($event.target.value)" placeholder="搜索"></ion-searchbar>
     </ion-navbar>
 </ion-header>
 <ion-content>
 	<div class="row img-center" *ngIf="!products">
 		<img height="35" src="assets/img/ring.svg">
-	</div>
-	<!--下拉刷新-->
- 	<ion-refresher (ionRefresh)="doRefresh($event)">
-      <ion-refresher-content
-        pullingIcon="arrow-dropdown"
-        pullingText="获取最新数据..."
-        refreshingSpinner="circles"
-        refreshingText="获取最新数据..">
-      </ion-refresher-content>
-    </ion-refresher>
-    <!--列表-->
+  </div>
+  
+   <!--列表-->
   <div  *ngIf="products">
   <ion-list class="search-list">
     <ion-item *ngFor="let product of products" (click)="gotoProductDetails(product)">

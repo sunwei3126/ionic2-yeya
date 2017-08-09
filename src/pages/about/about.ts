@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { CustomerService } from './../../providers/customer/customer-service';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { NavController, IonicPage, Events } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 
@@ -12,11 +13,13 @@ export class AboutPage {
   base64Image: any = "http://www.gravatar.com/avatar?d=mm&s=140";
   loginType:any;
   islogin:Boolean=false;
+
   customer:any;
-  cartNum:number=2;//购物车数量
+  cartNum:number = 0;//购物车数量
   
   constructor(public navCtrl: NavController,
      public events: Events,
+     public customerService:CustomerService,
      public storage: Storage) {
      this.loadLoginStatus(); 
      this.events.subscribe('user:login', (name) => {
@@ -26,6 +29,18 @@ export class AboutPage {
 
   ionViewDidLoad(){    
 
+  }
+
+  ionViewDidEnter(){
+      this.storage.get("customer").then(value => {
+        if(value){
+         this.customerService.getShoppingCartByCustomerId(value.id).subscribe(res=>{
+             let goodsList: Array<any> = res.shopping_carts;
+				     goodsList = goodsList.filter(cart => cart.shopping_cart_type==="ShoppingCart");
+				    	this.cartNum = goodsList.length;
+         })
+        } 
+      });
   }
 
   loadLoginStatus() {
@@ -91,6 +106,6 @@ export class AboutPage {
   					this.navCtrl.push(page,sub);
 				}
 			}
-     })
+    })
   }
 }

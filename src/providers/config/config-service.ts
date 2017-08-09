@@ -1,5 +1,6 @@
 
-export class Config {
-   static  API_SERVER :string ="http://localhost:15536/api";
-   //static  API_SERVER :string ="http://114.55.244.67/api";
+export class Config {    
+   //static  SERVER :string ="http://localhost:15536/";   
+   static  SERVER :string ="http://114.55.244.67"
+   static  API_SERVER :string = Config.SERVER+"/api";
 }

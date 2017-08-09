@@ -1,8 +1,12 @@
-import { Observable } from 'rxjs/Observable';
 import { Config } from './../config/config-service';
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/filter';
+import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/operator/switchMap';
 
 @Injectable()
 export class CatalogService {
@@ -35,9 +39,18 @@ export class CatalogService {
     return this.http.get(uri).map(response => response.json());
   }
 
-  search(term:string): Observable<any> {
-    var uri = this.searchProductsURI +"?q=" + term;
-    return this.http.get(uri).map(response => response.json());
+  search(terms:Observable<string>): Observable<any> {
+     return terms.debounceTime(400)
+                .filter(term =>term.length > 0)
+                .distinctUntilChanged()
+                .switchMap(term => this.searchEntries(term, 1, 20));
+  }
+
+  searchEntries(term:string, page:number, count:number) {
+    var url = `${this.searchProductsURI}?term=${term}&page=${page}&count=${count}`;
+     return this.http
+        .get(url)
+        .map(res => res.json());
   }
 
   createInquery(inquery:any) {

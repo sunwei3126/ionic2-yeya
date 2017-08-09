@@ -60,19 +60,15 @@ export class ProductDetailsPage {
 			}else{
         this.loginType=true;
 				this.customerService.AddShoppingCartItem(customer.id, product.id,this.count,this.product.price,"Wishlist").subscribe(res=>{	
-					if(res.errors) {
-					var errorMsg = this.formateErrorMessage(res.errors);
-					this.showResult(errorMsg, 5000, null);
-				 } else {
-					 this.showResult('添加收藏成功',1000, "CollectPage")
-				 }
+					 this.showResult('添加收藏成功',1000, "CollectPage");
 				}
-			), error=>{
-				console.log("hell" + error);
-			}
-  	 }
-	 })	 
-		
+		 	, res=>{
+			  	res = res.json();
+					var errorMsg = this.formateErrorMessage(res.errors);
+					this.showResult(errorMsg, 5000,null);
+			  });	 
+	  	}
+  	})
 	}
 
 	showResult(message:string, duration:number, page:string):void {
@@ -98,10 +94,9 @@ export class ProductDetailsPage {
                  errorList.push(...values)
 							}
 						}
-				 }
-
+			 }
 	  	return	errorList.join('\r\n')
-	}
+  	}
 
   countOperator(operater:number) {
 		this.count += operater;
@@ -121,12 +116,11 @@ export class ProductDetailsPage {
 			}else{
         this.loginType=true;
 				this.customerService.AddShoppingCartItem(customer.id, product.id,this.count,this.product.price,"ShoppingCart").subscribe(res=>{	
-		     if(res.errors) {
+					this.showResult('添加购物车成功',1000,"CartPage");
+				}, (res)=>{
+				  res = res.json();
 					var errorMsg = this.formateErrorMessage(res.errors);
 					this.showResult(errorMsg, 5000,null);
-				 } else {
-					 this.showResult('添加购物车成功',1000,"CartPage");
-				 }
 				});
 			}
 	  })

@@ -14,8 +14,11 @@ export class CustomerService {
   private CUSTOMER_URI:string = Config.API_SERVER + "/customers";
   private inqueryByCustomer:string = Config.API_SERVER + "/inquery/customer";
   private ordersByCustomer:string = Config.API_SERVER + "/orders/customer";
-  private shoppingCart:string = Config.API_SERVER + "/shopping_cart_items"
- 
+  private shoppingCart:string = Config.API_SERVER + "/shopping_cart_items";
+  private password_recovery = Config.API_SERVER + "/pass";
+  private registerURL = Config.SERVER + "/registerApi"
+  private sendCheckNumberUrl = Config.SERVER + "/Customer/SendCheckNumber";
+  
   constructor(public http: Http) {
   }
 
@@ -24,9 +27,31 @@ export class CustomerService {
     return this.http.get(this.LOGIN_URI + queryParams).map(response => response.json());
   }
 
+  sendCheckNumber(phone:string):Observable<any> {
+    var body = {
+        phoneNumber:phone
+    }
+    return this.http.post(this.sendCheckNumberUrl,body).map(res => res.json());
+  }
+
+  register(customer:any) {
+    return this.http.post(this.registerURL, customer).map(response => response.json());
+  }
+
   GetCustomerById(id:number) {
     var url = this.CUSTOMER_URI + "/" + id;
     return this.http.get(url).map(response => response.json());
+  }
+
+  ChangeCustomerPassword(id:number,newPassword:string) {
+    var url = this.CUSTOMER_URI + "/" + id;
+    var body ={
+     customer: {
+        id:id,
+        password: newPassword
+      }
+    }
+    return this.http.put(url,body).map(response => response.json());
   }
 
   getInqueriesByCustomerId(customer_id:string): Observable<any> {
@@ -60,6 +85,15 @@ export class CustomerService {
         shopping_cart_type:item_type
       }
     }
-    return this.http.post(url,shopping_item_cart).map(response => response.json()).catch((error:any) => Observable.throw(error.json().error || 'Server error')); 
-  }   
+    return this.http.post(url,shopping_item_cart);
+  
+  
+  }  
+  
+  passwordRecovery(email:string):Observable<any> {
+    var param = {
+      email:email
+    }
+   return  this.http.post(this.password_recovery,param).map(response => response.json());
+  }
 }
